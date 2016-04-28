@@ -58,7 +58,21 @@ Compile generics to instances:
 
 Specialized functions take precendence over template-defined functions.
 
+## Lesson 2: Basics of Generics and Classes
 
+### C++ new stuff in functions
+
+- default parameters, variable argument lists
+- const parameters
+- multiple types in generic
+- operator overloading
+
+casting:
+
+(YES)static_cast safe
+(NO)reinterpret_cast highly unsafe equivalent to C cast
+(NO)dynamic_cast(type) used with classes
+(NO)const_cast(type) cast away const-ness
 
 
 
