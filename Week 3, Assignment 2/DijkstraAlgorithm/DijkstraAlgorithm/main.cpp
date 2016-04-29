@@ -64,7 +64,21 @@ public:
 
     // lists all nodes y such that there is an edge from x to y.
     vector<int> neighbors(int x) {
+        int size = getV();
+
         vector<int> neighbors;
+
+        for (int i = 0; i < size; i++) {
+            if (x == i) {
+                continue;
+            }
+
+            int distance = matrix[x][i];
+
+            if (distance != NoDistance) {
+                neighbors.push_back(i);
+            }
+        }
 
         return neighbors;
     }
@@ -133,10 +147,22 @@ void testGraph_adjacent() {
     assert(graph.adjacent(2, 0));
 }
 
-void testGraph_InitialState_neighbors() {
-    Graph graph = Graph(0);
+void testGraph_neighbors() {
+    Graph graph = Graph(3);
 
-    assert(graph.neighbors(0).size() == 0);
+    int distanceNotRelevant = 27;
+
+    vector<int> neighbors = graph.neighbors(0);
+
+    assert(neighbors.size() == 0);
+
+    graph.addEdge(0, 1, distanceNotRelevant);
+    graph.addEdge(1, 2, distanceNotRelevant);
+    graph.addEdge(2, 0, distanceNotRelevant);
+
+    neighbors = graph.neighbors(0);
+
+    assert(neighbors.size() == 2);
 }
 
 // Test suite
@@ -146,10 +172,11 @@ void testSuite() {
     testGraph_Initialization_With0Vertices_getV_is0();
     testGraph_Initialization_With3Vertices_getV_is3();
     testGraph_Initialization_getE();
-    testGraph_adjacent();
-    testGraph_InitialState_neighbors();
 
+    // ...
     testGraph_addingEdge();
+    testGraph_adjacent();
+    testGraph_neighbors();
 }
 
 int main(int argc, const char * argv[]) {
