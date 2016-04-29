@@ -59,7 +59,7 @@ public:
 
     // tests whether there is an edge from node x to node y.
     bool adjacent(int x, int y) {
-        return false;
+        return matrix[x][y] != NoDistance;
     }
 
     // lists all nodes y such that there is an edge from x to y.
@@ -81,35 +81,27 @@ public:
     }
 };
 
-void testGraph_InitialState_Vis0_getVis0() {
+// Initialization
+
+void testGraph_Initialization_With0Vertices_getV_is0() {
     Graph graph = Graph(0);
 
     assert(graph.getV() == 0);
 }
 
-void testGraph_InitialState_Vis3_getVis3() {
+void testGraph_Initialization_With3Vertices_getV_is3() {
     Graph graph = Graph(3);
 
     assert(graph.getV() == 3);
 }
 
-void testGraph_InitialState_getE() {
+void testGraph_Initialization_getE() {
     Graph graph = Graph(0);
 
     assert(graph.getE() == 0);
 }
 
-void testGraph_InitialState_adjacent() {
-    Graph graph = Graph(0);
-
-    assert(graph.adjacent(0, 0) == false);
-}
-
-void testGraph_InitialState_neighbors() {
-    Graph graph = Graph(0);
-
-    assert(graph.neighbors(0).size() == 0);
-}
+//
 
 void testGraph_addingEdge() {
     Graph graph = Graph(3);
@@ -123,12 +115,38 @@ void testGraph_addingEdge() {
     assert(graph.getE() == 3);
 }
 
+void testGraph_adjacent() {
+    Graph graph = Graph(3);
+
+    int distanceNotRelevant = 27;
+
+    assert(graph.adjacent(0, 1) == false);
+    assert(graph.adjacent(1, 2) == false);
+    assert(graph.adjacent(2, 0) == false);
+
+    graph.addEdge(0, 1, distanceNotRelevant);
+    graph.addEdge(1, 2, distanceNotRelevant);
+    graph.addEdge(2, 0, distanceNotRelevant);
+
+    assert(graph.adjacent(0, 1));
+    assert(graph.adjacent(1, 2));
+    assert(graph.adjacent(2, 0));
+}
+
+void testGraph_InitialState_neighbors() {
+    Graph graph = Graph(0);
+
+    assert(graph.neighbors(0).size() == 0);
+}
+
+// Test suite
+
 void testSuite() {
     // Initial state
-    testGraph_InitialState_Vis0_getVis0();
-    testGraph_InitialState_Vis3_getVis3();
-    testGraph_InitialState_getE();
-    testGraph_InitialState_adjacent();
+    testGraph_Initialization_With0Vertices_getV_is0();
+    testGraph_Initialization_With3Vertices_getV_is3();
+    testGraph_Initialization_getE();
+    testGraph_adjacent();
     testGraph_InitialState_neighbors();
 
     testGraph_addingEdge();
