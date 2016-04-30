@@ -88,6 +88,8 @@ void Graph::removeEdge(int x, int y) {
     //
 }
 
+#pragma mark - Tests
+
 // Initialization
 
 void testGraph_Initialization_With0Vertices_getV_is0() {

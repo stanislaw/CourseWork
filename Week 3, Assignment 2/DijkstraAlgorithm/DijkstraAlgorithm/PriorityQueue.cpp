@@ -102,7 +102,7 @@ void PriorityQueue::swap(int x, int y) {
     iter_swap(minHeap.begin() + x, minHeap.begin() + y);
 }
 
-//////
+#pragma mark - Tests
 
 void test_initialization_values() {
     PriorityQueue queue = PriorityQueue({3, 111, 112, 1});

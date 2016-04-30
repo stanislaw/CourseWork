@@ -9,6 +9,22 @@
 #ifndef DijkstraAlgorithm_h
 #define DijkstraAlgorithm_h
 
+#include <vector>
+
+using namespace std;
+
+class DijkstraAlgorithm {
+
+private:
+
+public:
+    DijkstraAlgorithm();
+
+    vector <int> getShortestPathVertices(int source, int destination);
+    int getShortestPath(int source, int destination);
+};
+
+
 void testDijkstraAlgorithm();
 
 #endif /* DijkstraAlgorithm_h */

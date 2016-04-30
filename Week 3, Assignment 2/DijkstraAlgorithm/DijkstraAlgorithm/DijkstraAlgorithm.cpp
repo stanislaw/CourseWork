@@ -9,30 +9,23 @@
 #include "DijkstraAlgorithm.h"
 #include "Graph.h"
 
-#include <vector>
+DijkstraAlgorithm::DijkstraAlgorithm() {
 
-using namespace std;
+}
 
-class DijkstraAlgorithm {
+vector <int> DijkstraAlgorithm::getShortestPathVertices(int source, int destination) {
+    vector<int> vertices;
 
-private:
+    return vertices;
+}
 
-public:
-    DijkstraAlgorithm() {
-    }
+int DijkstraAlgorithm::getShortestPath(int source, int destination) {
+    int shortestPath = 0;
 
-    vector <int> getShortestPathVertices(int source, int destination) {
-        vector<int> vertices;
+    return shortestPath;
+}
 
-        return vertices;
-    }
-
-    int getShortestPath(int source, int destination) {
-        int shortestPath = 0;
-
-        return shortestPath;
-    }
-};
+#pragma mark - Tests
 
 void testOnEmptyGraph() {
     Graph graph(0);
