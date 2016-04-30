@@ -40,6 +40,19 @@ public:
         return minHeap[0];
     }
 
+    void deleteMin() {
+        int length = static_cast<int>(minHeap.size());
+
+        if (length == 0) {
+            return;
+        }
+
+        minHeap[0] = minHeap[length-1];
+        minHeap.pop_back();
+
+        bubbleDown(0);
+    }
+
     // Private
 private:
 
@@ -97,19 +110,6 @@ private:
         }
     }
 
-    void deleteMin() {
-        int length = static_cast<int>(minHeap.size());
-        
-        if (length == 0) {
-            return;
-        }
-        
-        minHeap[0] = minHeap[length-1];
-        minHeap.pop_back();
-        
-        bubbleDown(0);
-    }
-
     void swap(int x, int y) {
         iter_swap(minHeap.begin() + x, minHeap.begin() + y);
     }
@@ -152,12 +152,26 @@ void test_insertValuesWithReversePriority() {
     assert(queue.getMin() == 1);
 }
 
+void test_deleteMin() {
+    PriorityQueue queue = PriorityQueue({});
+
+    queue.insert(111);
+    queue.insert(3);
+    queue.insert(112);
+    queue.insert(1);
+
+    queue.deleteMin();
+    assert(queue.getMin() == 3);
+}
+
 void testPriorityQueue() {
     test_isEmpty_withEmptyVector();
     test_isEmpty_withSomeElements();
 
     test_insertValue();
     test_insertValuesWithReversePriority();
+
+    test_deleteMin();
 
     test_initialization_values();
 }
