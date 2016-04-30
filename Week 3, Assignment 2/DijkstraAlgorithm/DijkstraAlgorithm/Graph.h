@@ -9,6 +9,28 @@
 #ifndef Graph_h
 #define Graph_h
 
+#include <vector>
+
+using namespace std;
+
+class Graph {
+
+private:
+    vector<vector<int>> matrix;
+
+public:
+    Graph(int V);
+
+    int getV();
+    int getE();
+
+    void addEdge(int x, int y, int distance);
+    void removeEdge(int x, int y);
+
+    bool adjacent(int x, int y);
+    vector<int> neighbors(int x);
+};
+
 void testGraph();
 
 #endif /* Graph_h */

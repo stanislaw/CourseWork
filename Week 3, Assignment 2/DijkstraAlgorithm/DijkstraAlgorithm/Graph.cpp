@@ -12,90 +12,81 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 const int NoDistance = 0;
 
-class Graph {
+Graph::Graph(int V) {
+    // TODO: write test for default value 0
+    std::vector<std::vector<int>> matrix(
+                                         V,
+                                         std::vector<int>(V, NoDistance));
 
-private:
-    vector<vector<int>> matrix;
+    this->matrix = matrix;
+}
 
-public:
-    Graph(int V) {
-        // TODO: write test for default value 0
-        std::vector<std::vector<int>> matrix(
-                                             V,
-                                             std::vector<int>(V, NoDistance));
+// returns the number of vertices in the graph
+int Graph::getV() {
+    return static_cast<int>(matrix.size());
+};
 
-        this->matrix = matrix;
-    }
+// returns the number of edges in the graph
+int Graph::getE() {
+    int size = getV();
 
-    // returns the number of vertices in the graph
-    int getV() {
-        return static_cast<int>(matrix.size());
-    };
+    int E2 = 0;
 
-    // returns the number of edges in the graph
-    int getE() {
-        int size = getV();
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (i == j) continue;
 
-        int E2 = 0;
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i == j) continue;
-
-                int distance = matrix[i][j];
-
-                if (distance != NoDistance) {
-                    E2 = E2 + 1;
-                }
-            }
-        }
-
-        int E = E2 / 2;
-
-        return E;
-    };
-
-    // tests whether there is an edge from node x to node y.
-    bool adjacent(int x, int y) {
-        return matrix[x][y] != NoDistance;
-    }
-
-    // lists all nodes y such that there is an edge from x to y.
-    vector<int> neighbors(int x) {
-        int size = getV();
-
-        vector<int> neighbors;
-
-        for (int i = 0; i < size; i++) {
-            if (x == i) {
-                continue;
-            }
-
-            int distance = matrix[x][i];
+            int distance = matrix[i][j];
 
             if (distance != NoDistance) {
-                neighbors.push_back(i);
+                E2 = E2 + 1;
             }
         }
-
-        return neighbors;
     }
 
-    // adds to G the edge from x to y, if it is not there.
-    void addEdge(int x, int y, int distance) {
-        this->matrix[x][y] = distance;
-        this->matrix[y][x] = distance;
-    }
+    int E = E2 / 2;
 
-    // removes the edge from x to y, if it is there.
-    void removeEdge(int x, int y) {
-        //
-    }
+    return E;
 };
+
+// tests whether there is an edge from node x to node y.
+bool Graph::adjacent(int x, int y) {
+    return matrix[x][y] != NoDistance;
+}
+
+// lists all nodes y such that there is an edge from x to y.
+vector<int> Graph::neighbors(int x) {
+    int size = getV();
+
+    vector<int> neighbors;
+
+    for (int i = 0; i < size; i++) {
+        if (x == i) {
+            continue;
+        }
+
+        int distance = matrix[x][i];
+
+        if (distance != NoDistance) {
+            neighbors.push_back(i);
+        }
+    }
+
+    return neighbors;
+}
+
+// adds to G the edge from x to y, if it is not there.
+void Graph::addEdge(int x, int y, int distance) {
+    this->matrix[x][y] = distance;
+    this->matrix[y][x] = distance;
+}
+
+// removes the edge from x to y, if it is there.
+void Graph::removeEdge(int x, int y) {
+    //
+}
 
 // Initialization
 

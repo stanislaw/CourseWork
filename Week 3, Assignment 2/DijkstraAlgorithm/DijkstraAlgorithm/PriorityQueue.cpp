@@ -10,110 +10,99 @@
 
 #include <cassert>
 #include <iostream>
-#include <vector>
 
-using namespace std;
+PriorityQueue::PriorityQueue(vector<int> array) : minHeap(array) {
+    heapify();
+}
 
-class PriorityQueue {
+bool PriorityQueue::isEmpty() {
+    return minHeap.size() == 0;
+}
 
-private:
-    vector<int> minHeap;
+void PriorityQueue::insert(int newValue) {
+    int newIndex = static_cast<int>(minHeap.size());
 
-public:
-    PriorityQueue(vector<int> array) : minHeap(array) {
-        heapify();
+    minHeap.push_back(newValue);
+
+    bubbleUp(newIndex);
+}
+
+int PriorityQueue::getMin() {
+    return minHeap[0];
+}
+
+void PriorityQueue::deleteMin() {
+    int length = static_cast<int>(minHeap.size());
+
+    if (length == 0) {
+        return;
     }
 
-    bool isEmpty() {
-        return minHeap.size() == 0;
+    minHeap[0] = minHeap[length-1];
+    minHeap.pop_back();
+
+    bubbleDown(0);
+}
+
+void PriorityQueue::heapify() {
+    int length = static_cast<int>(minHeap.size());
+
+    for(int i = length - 1; i >= 0; --i) {
+        bubbleDown(i);
+    }
+}
+
+void PriorityQueue::bubbleDown(int index) {
+    int length = static_cast<int>(minHeap.size());
+
+    int leftChildIndex  = 2 * index + 1;
+    int rightChildIndex = 2 * index + 2;
+
+    if (leftChildIndex >= length) {
+        return; // index is a leaf
     }
 
-    void insert(int newValue) {
-        int newIndex = static_cast<int>(minHeap.size());
+    int tempIndex = index;
 
-        minHeap.push_back(newValue);
-
-        bubbleUp(newIndex);
+    if (minHeap[index] > minHeap[leftChildIndex]) {
+        tempIndex = leftChildIndex;
     }
 
-    int getMin() {
-        return minHeap[0];
+    if ((rightChildIndex < length) && (minHeap[tempIndex] > minHeap[rightChildIndex])) {
+        tempIndex = rightChildIndex;
     }
 
-    void deleteMin() {
-        int length = static_cast<int>(minHeap.size());
+    if (tempIndex != index) {
+        swap(index, tempIndex);
 
-        if (length == 0) {
-            return;
-        }
+        bubbleDown(tempIndex);
+    }
+}
 
-        minHeap[0] = minHeap[length-1];
-        minHeap.pop_back();
-
-        bubbleDown(0);
+void PriorityQueue::bubbleUp(int index) {
+    if (index == 0) {
+        return;
     }
 
-    // Private
-private:
+    // This division captures both left and right childs
+    // Because int / int integer division produces the same parent:
+    // n = 13
+    // l = 27 => (27 - 1) / 2 = 13
+    // r = 28 => (28 - 1) / 2 = 13
+    int parentIndex = (index - 1) / 2;
 
-    void heapify() {
-        int length = static_cast<int>(minHeap.size());
+    if (minHeap[parentIndex] > minHeap[index]) {
+        swap(parentIndex, index);
 
-        for(int i = length - 1; i >= 0; --i) {
-            bubbleDown(i);
-        }
+        bubbleUp(parentIndex);
     }
+}
 
-    void bubbleDown(int index) {
-        int length = static_cast<int>(minHeap.size());
+void PriorityQueue::swap(int x, int y) {
+    iter_swap(minHeap.begin() + x, minHeap.begin() + y);
+}
 
-        int leftChildIndex  = 2 * index + 1;
-        int rightChildIndex = 2 * index + 2;
-
-        if (leftChildIndex >= length) {
-            return; // index is a leaf
-        }
-
-        int tempIndex = index;
-
-        if (minHeap[index] > minHeap[leftChildIndex]) {
-            tempIndex = leftChildIndex;
-        }
-
-        if ((rightChildIndex < length) && (minHeap[tempIndex] > minHeap[rightChildIndex])) {
-            tempIndex = rightChildIndex;
-        }
-
-        if (tempIndex != index) {
-            swap(index, tempIndex);
-
-            bubbleDown(tempIndex);
-        }
-    }
-
-    void bubbleUp(int index) {
-        if (index == 0) {
-            return;
-        }
-
-        // This division captures both left and right childs
-        // Because int / int integer division produces the same parent:
-        // n = 13
-        // l = 27 => (27 - 1) / 2 = 13
-        // r = 28 => (28 - 1) / 2 = 13
-        int parentIndex = (index - 1) / 2;
-
-        if (minHeap[parentIndex] > minHeap[index]) {
-            swap(parentIndex, index);
-
-            bubbleUp(parentIndex);
-        }
-    }
-
-    void swap(int x, int y) {
-        iter_swap(minHeap.begin() + x, minHeap.begin() + y);
-    }
-};
+//////
 
 void test_initialization_values() {
     PriorityQueue queue = PriorityQueue({3, 111, 112, 1});

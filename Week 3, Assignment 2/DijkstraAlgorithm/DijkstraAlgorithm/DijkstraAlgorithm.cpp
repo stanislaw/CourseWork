@@ -7,6 +7,7 @@
 //
 
 #include "DijkstraAlgorithm.h"
+#include "Graph.h"
 
 #include <vector>
 
@@ -32,6 +33,10 @@ public:
         return shortestPath;
     }
 };
+
+void testOnEmptyGraph() {
+    Graph graph(0);
+}
 
 void testDijkstraAlgorithm() {
 
