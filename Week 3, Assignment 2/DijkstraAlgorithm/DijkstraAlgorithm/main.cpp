@@ -6,6 +6,7 @@
 //  Copyright © 2016 Stanislaw Pankevich. All rights reserved.
 //
 
+#include "DijkstraAlgorithm.h"
 #include "Graph.h"
 #include "PriorityQueue.h"
 
@@ -16,6 +17,7 @@ int main(int argc, const char * argv[]) {
 
     testGraph();
     testPriorityQueue();
+    testDijkstraAlgorithm();
 
     return 0;
 }

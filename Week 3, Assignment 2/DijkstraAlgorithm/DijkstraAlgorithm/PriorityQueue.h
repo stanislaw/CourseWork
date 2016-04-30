@@ -1,5 +1,5 @@
 //
-//  PriorityQueue.hpp
+//  PriorityQueue.h
 //  DijkstraAlgorithm
 //
 //  Created by Stanislaw Pankevich on 30/04/16.
