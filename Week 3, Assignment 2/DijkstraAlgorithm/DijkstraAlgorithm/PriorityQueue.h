@@ -6,11 +6,9 @@
 //  Copyright © 2016 Stanislaw Pankevich. All rights reserved.
 //
 
-#ifndef PriorityQueue_hpp
-#define PriorityQueue_hpp
-
-#include <stdio.h>
+#ifndef PriorityQueue_h
+#define PriorityQueue_h
 
 void testPriorityQueue();
 
-#endif /* PriorityQueue_hpp */
+#endif /* PriorityQueue_h */
