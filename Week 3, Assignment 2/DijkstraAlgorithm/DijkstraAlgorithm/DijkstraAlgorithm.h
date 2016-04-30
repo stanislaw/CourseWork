@@ -10,6 +10,8 @@
 #define DijkstraAlgorithm_h
 
 #include "Graph.h"
+#include "PriorityQueue.h"
+
 #include <vector>
 
 using namespace std;

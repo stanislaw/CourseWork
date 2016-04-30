@@ -10,12 +10,10 @@
 
 #include <cassert>
 
-DijkstraAlgorithm::DijkstraAlgorithm(Graph graph) : graph(graph) {
-
-}
+DijkstraAlgorithm::DijkstraAlgorithm(Graph graph) : graph(graph) {}
 
 vector <int> DijkstraAlgorithm::calculateShortestPathVertices(int source, int destination) {
-    int size = static_cast<int>(graph.getV());
+    int size = graph.getV();
 
     bool visited[size];
     fill_n(visited, size, false);
