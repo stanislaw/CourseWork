@@ -9,6 +9,7 @@
 #ifndef DijkstraAlgorithm_h
 #define DijkstraAlgorithm_h
 
+#include "Graph.h"
 #include <vector>
 
 using namespace std;
@@ -16,12 +17,13 @@ using namespace std;
 class DijkstraAlgorithm {
 
 private:
+    Graph graph;
 
 public:
-    DijkstraAlgorithm();
+    DijkstraAlgorithm(Graph graph);
 
-    vector <int> getShortestPathVertices(int source, int destination);
-    int getShortestPath(int source, int destination);
+    vector <int> calculateShortestPathVertices(int source, int destination);
+    int calculateShortestPath(int source, int destination);
 };
 
 

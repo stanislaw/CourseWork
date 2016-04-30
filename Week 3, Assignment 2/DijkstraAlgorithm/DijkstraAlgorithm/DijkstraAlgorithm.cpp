@@ -7,19 +7,28 @@
 //
 
 #include "DijkstraAlgorithm.h"
-#include "Graph.h"
 
-DijkstraAlgorithm::DijkstraAlgorithm() {
+#include <cassert>
+
+DijkstraAlgorithm::DijkstraAlgorithm(Graph graph) : graph(graph) {
 
 }
 
-vector <int> DijkstraAlgorithm::getShortestPathVertices(int source, int destination) {
+vector <int> DijkstraAlgorithm::calculateShortestPathVertices(int source, int destination) {
+    int size = static_cast<int>(graph.getV());
+
+    bool visited[size];
+    fill_n(visited, size, false);
+
     vector<int> vertices;
 
     return vertices;
 }
 
-int DijkstraAlgorithm::getShortestPath(int source, int destination) {
+// *(*(w+st)+i) ==> w[st][i]
+// *(*(vector+i)+j) ===> vector[i][j]
+
+int DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
     int shortestPath = 0;
 
     return shortestPath;
@@ -27,10 +36,14 @@ int DijkstraAlgorithm::getShortestPath(int source, int destination) {
 
 #pragma mark - Tests
 
-void testOnEmptyGraph() {
-    Graph graph(0);
+void testOnSingleElementGraph() {
+    Graph graph(1);
+
+    DijkstraAlgorithm algorithm(graph);
+
+    assert(algorithm.calculateShortestPath(0, 0) == 0);
 }
 
 void testDijkstraAlgorithm() {
-
+    testOnSingleElementGraph();
 }
