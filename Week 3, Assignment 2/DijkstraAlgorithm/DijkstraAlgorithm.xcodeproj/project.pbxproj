@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		86E26DF81CD28A2200D5D039 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26DF71CD28A2200D5D039 /* main.cpp */; };
+		86E26E001CD4F84A00D5D039 /* PriorityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26DFE1CD4F84A00D5D039 /* PriorityQueue.cpp */; };
+		86E26E031CD4F8C400D5D039 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E011CD4F8C400D5D039 /* Graph.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		86E26DF41CD28A2200D5D039 /* DijkstraAlgorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DijkstraAlgorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		86E26DF71CD28A2200D5D039 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		86E26DFE1CD4F84A00D5D039 /* PriorityQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PriorityQueue.cpp; sourceTree = "<group>"; };
+		86E26DFF1CD4F84A00D5D039 /* PriorityQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriorityQueue.h; sourceTree = "<group>"; };
+		86E26E011CD4F8C400D5D039 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
+		86E26E021CD4F8C400D5D039 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				86E26DF71CD28A2200D5D039 /* main.cpp */,
+				86E26DFE1CD4F84A00D5D039 /* PriorityQueue.cpp */,
+				86E26DFF1CD4F84A00D5D039 /* PriorityQueue.h */,
+				86E26E011CD4F8C400D5D039 /* Graph.cpp */,
+				86E26E021CD4F8C400D5D039 /* Graph.h */,
 			);
 			path = DijkstraAlgorithm;
 			sourceTree = "<group>";
@@ -119,6 +129,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				86E26DF81CD28A2200D5D039 /* main.cpp in Sources */,
+				86E26E031CD4F8C400D5D039 /* Graph.cpp in Sources */,
+				86E26E001CD4F84A00D5D039 /* PriorityQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
