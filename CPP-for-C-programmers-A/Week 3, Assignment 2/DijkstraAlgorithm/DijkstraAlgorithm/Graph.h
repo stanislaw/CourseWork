@@ -29,6 +29,8 @@ public:
 
     bool adjacent(int x, int y);
     vector<int> neighbors(int x);
+
+    int getDistance(int x, int y);
 };
 
 void testGraph();

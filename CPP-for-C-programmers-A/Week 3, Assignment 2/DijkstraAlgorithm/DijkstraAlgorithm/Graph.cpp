@@ -77,6 +77,10 @@ vector<int> Graph::neighbors(int x) {
     return neighbors;
 }
 
+int Graph::getDistance(int x, int y) {
+    return matrix[x][y];
+}
+
 // adds to G the edge from x to y, if it is not there.
 void Graph::addEdge(int x, int y, int distance) {
     this->matrix[x][y] = distance;

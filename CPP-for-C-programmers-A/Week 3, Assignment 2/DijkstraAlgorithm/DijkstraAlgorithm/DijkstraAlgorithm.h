@@ -16,6 +16,13 @@
 
 using namespace std;
 
+struct VDPair {
+    int vertex;
+    int distance;
+
+    VDPair(int vertex, int distance) : vertex(vertex), distance(distance) {}
+};
+
 class DijkstraAlgorithm {
 
 private:
@@ -24,7 +31,7 @@ private:
 public:
     DijkstraAlgorithm(Graph graph);
 
-    vector <int> calculateShortestPathVertices(int source, int destination);
+    vector <VDPair> calculateShortestPathVertices(int source, int destination);
     int calculateShortestPath(int source, int destination);
 };
 
