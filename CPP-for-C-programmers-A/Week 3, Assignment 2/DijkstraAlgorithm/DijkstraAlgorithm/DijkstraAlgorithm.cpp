@@ -27,7 +27,7 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
         throw "source must be less than size of the graph!";
     }
 
-    vector<int> visited = vector<int>(size, 0);
+    vector<bool> visited = vector<bool>(size, false);
 
     vector<VSPath> history = vector<VSPath>(size);
     for (int i = 0; i < size; i++) {
@@ -57,7 +57,7 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
         for (auto neighbour : neighbours) {
             int distance = graph.getDistance(currentVertexPair.vertex, neighbour);
 
-            if (history[neighbour].distance > (history[currentVertexPair.vertex].distance + distance)) {
+            if (visited[neighbour] == false && history[neighbour].distance > (history[currentVertexPair.vertex].distance + distance)) {
                 history[neighbour].distance =  history[currentVertexPair.vertex].distance + distance;
 
                 vector<int> newStory = history[currentVertexPair.vertex].path;
@@ -68,6 +68,8 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
                 queue.push(VDPair(neighbour, history[neighbour].distance) );
             }
         }
+
+        visited[currentVertexPair.vertex] = true;
     }
 
     return VSPath(0);
