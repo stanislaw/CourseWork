@@ -83,6 +83,14 @@ int Graph::getDistance(int x, int y) {
 
 // adds to G the edge from x to y, if it is not there.
 void Graph::addEdge(int x, int y, int distance) {
+    if (x >= getV()) {
+        throw "x vertex must be part of graph!";
+    }
+
+    if (y >= getV()) {
+        throw "y vertex must be part of graph!";
+    }
+
     this->matrix[x][y] = distance;
     this->matrix[y][x] = distance;
 }

@@ -21,6 +21,15 @@ struct VDPair {
     int distance;
 
     VDPair(int vertex, int distance) : vertex(vertex), distance(distance) {}
+
+    friend ostream& operator<<(ostream& os, const VDPair & dt);
+};
+
+struct VSPath {
+    int distance;
+    vector<int> story;
+
+    VSPath(int distance = 0) : distance(distance), story() {}
 };
 
 class DijkstraAlgorithm {
@@ -31,8 +40,8 @@ private:
 public:
     DijkstraAlgorithm(Graph graph);
 
-    vector <VDPair> calculateShortestPathVertices(int source, int destination);
-    int calculateShortestPath(int source, int destination);
+    VSPath calculateShortestPath(int source, int destination);
+    int calculateShortestPathDistance(int source, int destination);
 };
 
 
