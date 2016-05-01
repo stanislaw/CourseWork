@@ -162,6 +162,46 @@ void test_calculateShortestPathVertices_WikipediaExample() {
     assert(shortestPath_5_3.story == vector<int>({5, 2, 3}));
 }
 
+void test_calculateShortestPathVertices_integrationTest() {
+    Graph graph(18);
+
+    graph.addEdge(0,1,2);
+    graph.addEdge(1,2,4);
+    graph.addEdge(1,5,6);
+    graph.addEdge(2,4,2);
+    graph.addEdge(2,5,2);
+    graph.addEdge(3,4,7);
+    graph.addEdge(3,7,12);
+    graph.addEdge(4,7,11);
+    graph.addEdge(4,8,6);
+    graph.addEdge(5,6,14);
+    graph.addEdge(5,8,8);
+    graph.addEdge(5,9,2);
+    graph.addEdge(6,9,11);
+    graph.addEdge(6,10,11);
+    graph.addEdge(7,8,4);
+    graph.addEdge(7,12,5);
+    graph.addEdge(8,9,6);
+    graph.addEdge(8,13,4);
+    graph.addEdge(9,10,9);
+    graph.addEdge(9,13,3);
+    graph.addEdge(11,12,12);
+    graph.addEdge(11,15,6);
+    graph.addEdge(12,13,9);
+    graph.addEdge(12,15,11);
+    graph.addEdge(13,14,8);
+    graph.addEdge(13,17,4);
+    graph.addEdge(14,17,3);
+    graph.addEdge(15,16,7);
+
+    DijkstraAlgorithm algorithm(graph);
+
+    VSPath shortestPath_4_13 = algorithm.calculateShortestPath(4, 13);
+
+    assert(shortestPath_4_13.distance == 9);
+    assert(shortestPath_4_13.story == vector<int>({4, 2, 5, 9, 13}));
+}
+
 void test_calculateShortestPathVertices_threeElements_withoutEdges() {
     Graph graph(3);
 
@@ -210,6 +250,7 @@ void testDijkstraAlgorithm() {
     test_calculateShortestPathVertices_threeElements();
     test_calculateShortestPathVertices_fiveElements();
     test_calculateShortestPathVertices_WikipediaExample();
+    test_calculateShortestPathVertices_integrationTest();
 
     test_calculateShortestPathVertices_threeElements_withoutEdges();
 
