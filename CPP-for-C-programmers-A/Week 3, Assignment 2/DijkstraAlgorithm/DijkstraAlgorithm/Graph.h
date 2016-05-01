@@ -16,7 +16,7 @@ using namespace std;
 class Graph {
 
 private:
-    vector<vector<int>> matrix;
+    vector<vector<int> > matrix;
 
 public:
     Graph(int V);

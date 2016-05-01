@@ -120,7 +120,7 @@ void test_initialization_values() {
 }
 
 void test_isEmpty_withEmptyVector() {
-    PriorityQueue<int> queue = PriorityQueue<int>({});
+    PriorityQueue<int> queue = PriorityQueue<int>(vector<int>());
 
     assert(queue.isEmpty());
 }
@@ -132,7 +132,7 @@ void test_isEmpty_withSomeElements() {
 }
 
 void test_insertValue() {
-    PriorityQueue<int> queue = PriorityQueue<int>({});
+    PriorityQueue<int> queue = PriorityQueue<int>(vector<int>());
 
     queue.insert(5);
 
@@ -140,7 +140,7 @@ void test_insertValue() {
 }
 
 void test_insertValuesWithReversePriority() {
-    PriorityQueue<int> queue = PriorityQueue<int>({});
+    PriorityQueue<int> queue = PriorityQueue<int>(vector<int>());
 
     queue.insert(3);
     queue.insert(111);
@@ -151,7 +151,7 @@ void test_insertValuesWithReversePriority() {
 }
 
 void test_deleteMin() {
-    PriorityQueue<int> queue = PriorityQueue<int>({});
+    PriorityQueue<int> queue = PriorityQueue<int>(vector<int>());
 
     queue.insert(111);
     queue.insert(3);

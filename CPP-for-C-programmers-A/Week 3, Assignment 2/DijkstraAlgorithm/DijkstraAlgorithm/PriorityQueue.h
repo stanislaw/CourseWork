@@ -14,7 +14,10 @@
 using namespace std;
 
 // Min Binary Heap Implementation in C++
+//
+// Based on:
 // http://www.codeproject.com/Tips/816934/Min-Binary-Heap-Implementation-in-Cplusplus#_comments
+//
 template <class T>
 class PriorityQueue {
 

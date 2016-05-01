@@ -9,29 +9,18 @@
 #include "DijkstraAlgorithm.h"
 
 #include <cassert>
+#include <queue>
 
 DijkstraAlgorithm::DijkstraAlgorithm(Graph graph) : graph(graph) {}
 
 vector <int> DijkstraAlgorithm::calculateShortestPathVertices(int source, int destination) {
     int size = graph.getV();
 
-    vector<int> labels;
-    vector<int> vertices_source;
+    PriorityQueue<int> queue = PriorityQueue<int>(vector<int>());
 
-    for (int i = 0; i < size; i++) {
-        if (i == source) {
-            labels.insert(labels.begin(), 0);
-        } else {
-            labels.push_back(INT_MAX);
-        }
-    }
-
-    vector<int> vertices;
-    return vertices;
+    vector<int> bla;
+    return bla;
 }
-
-// *(*(w+st)+i) ==> w[st][i]
-// *(*(vector+i)+j) ===> vector[i][j]
 
 int DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
     int shortestPath = 0;
