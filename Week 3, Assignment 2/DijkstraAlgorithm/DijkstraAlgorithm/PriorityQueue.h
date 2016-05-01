@@ -13,17 +13,20 @@
 
 using namespace std;
 
+// Min Binary Heap Implementation in C++
+// http://www.codeproject.com/Tips/816934/Min-Binary-Heap-Implementation-in-Cplusplus#_comments
+template <class T>
 class PriorityQueue {
 
 private:
-    vector<int> minHeap;
+    vector<T> minHeap;
 
 public:
-    PriorityQueue(vector<int> array);
+    PriorityQueue(vector<T> array);
 
     bool isEmpty();
-    void insert(int newValue);
-    int getMin();
+    void insert(T newValue);
+    T getMin();
     void deleteMin();
 
 private:

@@ -15,11 +15,18 @@ DijkstraAlgorithm::DijkstraAlgorithm(Graph graph) : graph(graph) {}
 vector <int> DijkstraAlgorithm::calculateShortestPathVertices(int source, int destination) {
     int size = graph.getV();
 
-    bool visited[size];
-    fill_n(visited, size, false);
+    vector<int> labels;
+    vector<int> vertices_source;
+
+    for (int i = 0; i < size; i++) {
+        if (i == source) {
+            labels.insert(labels.begin(), 0);
+        } else {
+            labels.push_back(INT_MAX);
+        }
+    }
 
     vector<int> vertices;
-
     return vertices;
 }
 

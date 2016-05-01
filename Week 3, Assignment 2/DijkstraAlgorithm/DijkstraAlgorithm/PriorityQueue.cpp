@@ -11,15 +11,18 @@
 #include <cassert>
 #include <iostream>
 
-PriorityQueue::PriorityQueue(vector<int> array) : minHeap(array) {
+template <class T>
+PriorityQueue<T>::PriorityQueue(vector<T> array) : minHeap(array) {
     heapify();
 }
 
-bool PriorityQueue::isEmpty() {
+template <class T>
+bool PriorityQueue<T>::isEmpty() {
     return minHeap.size() == 0;
 }
 
-void PriorityQueue::insert(int newValue) {
+template <class T>
+void PriorityQueue<T>::insert(T newValue) {
     int newIndex = static_cast<int>(minHeap.size());
 
     minHeap.push_back(newValue);
@@ -27,11 +30,13 @@ void PriorityQueue::insert(int newValue) {
     bubbleUp(newIndex);
 }
 
-int PriorityQueue::getMin() {
+template <class T>
+T PriorityQueue<T>::getMin() {
     return minHeap[0];
 }
 
-void PriorityQueue::deleteMin() {
+template <class T>
+void PriorityQueue<T>::deleteMin() {
     int length = static_cast<int>(minHeap.size());
 
     if (length == 0) {
@@ -44,7 +49,8 @@ void PriorityQueue::deleteMin() {
     bubbleDown(0);
 }
 
-void PriorityQueue::heapify() {
+template <class T>
+void PriorityQueue<T>::heapify() {
     int length = static_cast<int>(minHeap.size());
 
     for(int i = length - 1; i >= 0; --i) {
@@ -52,7 +58,8 @@ void PriorityQueue::heapify() {
     }
 }
 
-void PriorityQueue::bubbleDown(int index) {
+template <class T>
+void PriorityQueue<T>::bubbleDown(int index) {
     int length = static_cast<int>(minHeap.size());
 
     int leftChildIndex  = 2 * index + 1;
@@ -79,7 +86,8 @@ void PriorityQueue::bubbleDown(int index) {
     }
 }
 
-void PriorityQueue::bubbleUp(int index) {
+template <class T>
+void PriorityQueue<T>::bubbleUp(int index) {
     if (index == 0) {
         return;
     }
@@ -98,32 +106,33 @@ void PriorityQueue::bubbleUp(int index) {
     }
 }
 
-void PriorityQueue::swap(int x, int y) {
+template <class T>
+void PriorityQueue<T>::swap(int x, int y) {
     iter_swap(minHeap.begin() + x, minHeap.begin() + y);
 }
 
 #pragma mark - Tests
 
 void test_initialization_values() {
-    PriorityQueue queue = PriorityQueue({3, 111, 112, 1});
+    PriorityQueue<int> queue = PriorityQueue<int>({3, 111, 112, 1});
 
     assert(queue.getMin() == 1);
 }
 
 void test_isEmpty_withEmptyVector() {
-    PriorityQueue queue = PriorityQueue({});
+    PriorityQueue<int> queue = PriorityQueue<int>({});
 
     assert(queue.isEmpty());
 }
 
 void test_isEmpty_withSomeElements() {
-    PriorityQueue queue = PriorityQueue({5, 3, 14});
+    PriorityQueue<int> queue = PriorityQueue<int>({5, 3, 14});
 
     assert(queue.isEmpty() == false);
 }
 
 void test_insertValue() {
-    PriorityQueue queue = PriorityQueue({});
+    PriorityQueue<int> queue = PriorityQueue<int>({});
 
     queue.insert(5);
 
@@ -131,7 +140,7 @@ void test_insertValue() {
 }
 
 void test_insertValuesWithReversePriority() {
-    PriorityQueue queue = PriorityQueue({});
+    PriorityQueue<int> queue = PriorityQueue<int>({});
 
     queue.insert(3);
     queue.insert(111);
@@ -142,7 +151,7 @@ void test_insertValuesWithReversePriority() {
 }
 
 void test_deleteMin() {
-    PriorityQueue queue = PriorityQueue({});
+    PriorityQueue<int> queue = PriorityQueue<int>({});
 
     queue.insert(111);
     queue.insert(3);
