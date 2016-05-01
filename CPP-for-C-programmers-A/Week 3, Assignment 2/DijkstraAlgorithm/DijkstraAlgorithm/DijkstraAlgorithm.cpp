@@ -27,13 +27,14 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
         throw "source must be less than size of the graph!";
     }
 
-    vector<VSPath> history = vector<VSPath>(size);
+    vector<int> visited = vector<int>(size, 0);
 
+    vector<VSPath> history = vector<VSPath>(size);
     for (int i = 0; i < size; i++) {
         history[i] = VSPath(INT_MAX);
     }
     history[source] = VSPath(0);
-    history[source].story.push_back(source);
+    history[source].path.push_back(source);
 
     priority_queue<VDPair, vector<VDPair>, VDPairComparator> queue;
     queue.push(VDPair(source, 0));
@@ -59,10 +60,10 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
             if (history[neighbour].distance > (history[currentVertexPair.vertex].distance + distance)) {
                 history[neighbour].distance =  history[currentVertexPair.vertex].distance + distance;
 
-                vector<int> newStory = history[currentVertexPair.vertex].story;
+                vector<int> newStory = history[currentVertexPair.vertex].path;
                 newStory.push_back(neighbour);
 
-                history[neighbour].story = newStory;
+                history[neighbour].path = newStory;
 
                 queue.push(VDPair(neighbour, history[neighbour].distance) );
             }
@@ -94,8 +95,8 @@ void test_calculateShortestPath_singleElementGraph() {
 
     assert(shortestPath.distance == 0);
 
-    assert(shortestPath.story.size() == 1);
-    assert(*shortestPath.story.begin() == 0);
+    assert(shortestPath.path.size() == 1);
+    assert(*shortestPath.path.begin() == 0);
 }
 
 void test_calculateShortestPathVertices_threeElements() {
@@ -111,8 +112,8 @@ void test_calculateShortestPathVertices_threeElements() {
 
     assert(shortestPath.distance == 5);
 
-    assert(*shortestPath.story.begin() == 0);
-    assert(*(shortestPath.story.begin() + 1) == 2);
+    assert(*shortestPath.path.begin() == 0);
+    assert(*(shortestPath.path.begin() + 1) == 2);
 }
 
 void test_calculateShortestPathVertices_fiveElements() {
@@ -128,7 +129,7 @@ void test_calculateShortestPathVertices_fiveElements() {
     VSPath shortestPath = algorithm.calculateShortestPath(0, 4);
 
     assert(shortestPath.distance = 10);
-    assert(shortestPath.story == vector<int>({0, 1, 2, 3, 4}));
+    assert(shortestPath.path == vector<int>({0, 1, 2, 3, 4}));
 }
 
 void test_calculateShortestPathVertices_WikipediaExample() {
@@ -149,17 +150,17 @@ void test_calculateShortestPathVertices_WikipediaExample() {
     VSPath shortestPath_0_3 = algorithm.calculateShortestPath(0, 3);
 
     assert(shortestPath_0_3.distance == 20);
-    assert(shortestPath_0_3.story == vector<int>({0, 2, 3}));
+    assert(shortestPath_0_3.path == vector<int>({0, 2, 3}));
 
     VSPath shortestPath_0_4 = algorithm.calculateShortestPath(0, 4);
 
     assert(shortestPath_0_4.distance == 20);
-    assert(shortestPath_0_4.story == vector<int>({0, 2, 5, 4}));
+    assert(shortestPath_0_4.path == vector<int>({0, 2, 5, 4}));
 
     VSPath shortestPath_5_3 = algorithm.calculateShortestPath(5, 3);
 
     assert(shortestPath_5_3.distance == 13);
-    assert(shortestPath_5_3.story == vector<int>({5, 2, 3}));
+    assert(shortestPath_5_3.path == vector<int>({5, 2, 3}));
 }
 
 void test_calculateShortestPathVertices_integrationTest() {
@@ -199,7 +200,7 @@ void test_calculateShortestPathVertices_integrationTest() {
     VSPath shortestPath_4_13 = algorithm.calculateShortestPath(4, 13);
 
     assert(shortestPath_4_13.distance == 9);
-    assert(shortestPath_4_13.story == vector<int>({4, 2, 5, 9, 13}));
+    assert(shortestPath_4_13.path == vector<int>({4, 2, 5, 9, 13}));
 }
 
 void test_calculateShortestPathVertices_threeElements_withoutEdges() {
@@ -210,7 +211,7 @@ void test_calculateShortestPathVertices_threeElements_withoutEdges() {
     VSPath shortestPath1 = algorithm.calculateShortestPath(0, 2);
 
     assert(shortestPath1.distance == 0);
-    assert(shortestPath1.story == vector<int>({}));
+    assert(shortestPath1.path == vector<int>({}));
 
     graph.addEdge(0, 1, 10);
 
@@ -219,7 +220,7 @@ void test_calculateShortestPathVertices_threeElements_withoutEdges() {
     VSPath shortestPath2 = algorithm2.calculateShortestPath(0, 2);
 
     assert(shortestPath2.distance == 0);
-    assert(shortestPath2.story == vector<int>({}));
+    assert(shortestPath2.path == vector<int>({}));
 
     graph.addEdge(1, 2, 10);
 
@@ -228,7 +229,7 @@ void test_calculateShortestPathVertices_threeElements_withoutEdges() {
     VSPath shortestPath3 = algorithm3.calculateShortestPath(0, 2);
 
     assert(shortestPath3.distance == 20);
-    assert(shortestPath3.story == vector<int>({0, 1, 2}));
+    assert(shortestPath3.path == vector<int>({0, 1, 2}));
 }
 
 void test_calculateShortestPathDistance_threeElements() {

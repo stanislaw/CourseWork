@@ -27,9 +27,9 @@ struct VDPair {
 
 struct VSPath {
     int distance;
-    vector<int> story;
+    vector<int> path;
 
-    VSPath(int distance = 0) : distance(distance), story() {}
+    VSPath(int distance = 0) : distance(distance), path() {}
 };
 
 class DijkstraAlgorithm {
