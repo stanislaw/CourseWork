@@ -21,7 +21,7 @@ private:
 public:
     Graph(int V);
 
-    int getV();
+    int getV() const;
     int getE();
 
     void addEdge(int x, int y, int distance);
@@ -31,6 +31,8 @@ public:
     vector<int> neighbors(int x);
 
     int getDistance(int x, int y);
+
+    friend ostream& operator<<(ostream& os, const Graph &graph);
 };
 
 void testGraph();

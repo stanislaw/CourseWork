@@ -24,7 +24,7 @@ Graph::Graph(int V) {
 }
 
 // returns the number of vertices in the graph
-int Graph::getV() {
+int Graph::getV() const {
     return static_cast<int>(matrix.size());
 };
 
@@ -98,6 +98,21 @@ void Graph::addEdge(int x, int y, int distance) {
 // removes the edge from x to y, if it is there.
 void Graph::removeEdge(int x, int y) {
     //
+}
+
+ostream& operator<<(ostream& os, const Graph &graph) {
+    int size = graph.getV();
+
+    for (int i = 0; i < size; ++i) {
+        os << '[' << i << ']' << " ";
+        for (int j = 0; j < size; ++j) {
+            os << graph.matrix[i][j] << ' ';
+        }
+
+        os << endl;
+    }
+
+    return os;
 }
 
 #pragma mark - Tests
@@ -175,12 +190,10 @@ void testGraph_neighbors() {
 // Test suite
 
 void testGraph() {
-    // Initial state
     testGraph_Initialization_With0Vertices_getV_is0();
     testGraph_Initialization_With3Vertices_getV_is3();
     testGraph_Initialization_getE();
     
-    // ...
     testGraph_addingEdge();
     testGraph_adjacent();
     testGraph_neighbors();

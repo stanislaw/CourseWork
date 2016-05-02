@@ -85,6 +85,20 @@ ostream& operator<<(ostream& os, const VDPair & pair) {
     return os;
 }
 
+ostream& operator<<(ostream& os, const VSPath &path) {
+    int size = path.path.size();
+
+    os << path.distance << ": ";
+
+    for (int i = 0; i < size; i++) {
+        os << path.path[i] << ' ';
+    }
+
+    os << endl;
+
+    return os;
+}
+
 #pragma mark - Tests
 
 // Test: calculateShortestPath

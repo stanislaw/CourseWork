@@ -30,6 +30,8 @@ struct VSPath {
     vector<int> path;
 
     VSPath(int distance = 0) : distance(distance), path() {}
+
+    friend ostream& operator<<(ostream& os, const VSPath &path);
 };
 
 class DijkstraAlgorithm {

@@ -21,5 +21,17 @@ int main(int argc, const char * argv[]) {
     testDijkstraAlgorithm();
     testGraphBuilder();
 
+    GraphBuilder builder(50, 0.2, 1, 9);
+
+    Graph graph = builder.build();
+
+    cout << graph;
+
+    DijkstraAlgorithm algorithm(graph);
+
+    VSPath shortestPath = algorithm.calculateShortestPath(0, 49);
+
+    cout << shortestPath;
+
     return 0;
 }

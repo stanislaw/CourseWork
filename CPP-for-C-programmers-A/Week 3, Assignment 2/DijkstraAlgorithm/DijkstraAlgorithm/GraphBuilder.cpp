@@ -28,8 +28,6 @@ Graph GraphBuilder::build() {
 
     srand(clock());
 
-    // rand() - 0..2147483647
-
     for (int i = 0; i < size; ++i) {
         for (int j = i + 1; j < size; ++j) {
             // http://stackoverflow.com/a/7560564/598057
@@ -40,9 +38,7 @@ Graph GraphBuilder::build() {
 
             float random = static_cast<float>(distr(eng)) / 100;
 
-            cout << random << endl;
-
-            if (random < density) {
+            if (random <= density) {
                 std::uniform_int_distribution<> distance_distr(minDistance, maxDistance);
 
                 graph.addEdge(i, j, distance_distr(eng));
@@ -57,12 +53,18 @@ void test_build_createsGraph() {
     int V = 5;
     int E = (V * V - V) / 2;
 
-    GraphBuilder builder(V, 1, 1, 1);
+    for (int i = 0; i < 1000; i++) {
+        GraphBuilder builder(V, 1, 1, 1);
 
-    Graph graph = builder.build();
+        Graph graph = builder.build();
 
-    assert(graph.getV() == 5);
-    assert(graph.getE() == E);
+        assert(graph.getV() == 5);
+
+        if (graph.getE() != E) {
+            cout << "wrong: " << graph.getE() << ' ' << E << endl;
+            assert(graph.getE() == E);
+        }
+    }
 }
 
 void testGraphBuilder() {
