@@ -11,6 +11,7 @@
 		86E26E001CD4F84A00D5D039 /* PriorityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26DFE1CD4F84A00D5D039 /* PriorityQueue.cpp */; };
 		86E26E031CD4F8C400D5D039 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E011CD4F8C400D5D039 /* Graph.cpp */; };
 		86E26E061CD550CD00D5D039 /* DijkstraAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E041CD550CD00D5D039 /* DijkstraAlgorithm.cpp */; };
+		86E26E091CD6C9CE00D5D039 /* GraphBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E071CD6C9CE00D5D039 /* GraphBuilder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		86E26E021CD4F8C400D5D039 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		86E26E041CD550CD00D5D039 /* DijkstraAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DijkstraAlgorithm.cpp; sourceTree = "<group>"; };
 		86E26E051CD550CD00D5D039 /* DijkstraAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DijkstraAlgorithm.h; sourceTree = "<group>"; };
+		86E26E071CD6C9CE00D5D039 /* GraphBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphBuilder.cpp; sourceTree = "<group>"; };
+		86E26E081CD6C9CE00D5D039 /* GraphBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphBuilder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 				86E26E021CD4F8C400D5D039 /* Graph.h */,
 				86E26E041CD550CD00D5D039 /* DijkstraAlgorithm.cpp */,
 				86E26E051CD550CD00D5D039 /* DijkstraAlgorithm.h */,
+				86E26E071CD6C9CE00D5D039 /* GraphBuilder.cpp */,
+				86E26E081CD6C9CE00D5D039 /* GraphBuilder.h */,
 			);
 			path = DijkstraAlgorithm;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				86E26DF81CD28A2200D5D039 /* main.cpp in Sources */,
 				86E26E061CD550CD00D5D039 /* DijkstraAlgorithm.cpp in Sources */,
 				86E26E031CD4F8C400D5D039 /* Graph.cpp in Sources */,
+				86E26E091CD6C9CE00D5D039 /* GraphBuilder.cpp in Sources */,
 				86E26E001CD4F84A00D5D039 /* PriorityQueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

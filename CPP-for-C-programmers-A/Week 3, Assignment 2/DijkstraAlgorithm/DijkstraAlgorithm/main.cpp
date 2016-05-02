@@ -8,6 +8,7 @@
 
 #include "DijkstraAlgorithm.h"
 #include "Graph.h"
+#include "GraphBuilder.h"
 #include "PriorityQueue.h"
 
 #include <iostream>
@@ -18,6 +19,7 @@ int main(int argc, const char * argv[]) {
     testGraph();
     testPriorityQueue();
     testDijkstraAlgorithm();
-    
+    testGraphBuilder();
+
     return 0;
 }
