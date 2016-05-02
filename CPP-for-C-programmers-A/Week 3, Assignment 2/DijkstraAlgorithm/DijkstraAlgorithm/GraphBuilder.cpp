@@ -30,8 +30,8 @@ Graph GraphBuilder::build() {
 
     for (int i = 0; i < size; ++i) {
         for (int j = i + 1; j < size; ++j) {
-            // http://stackoverflow.com/a/7560564/598057
 
+            // http://stackoverflow.com/a/7560564/598057
             std::random_device rd;
             std::mt19937 eng(rd());
             std::uniform_int_distribution<> distr(0, 100);

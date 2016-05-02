@@ -34,6 +34,11 @@ struct VSPath {
     friend ostream& operator<<(ostream& os, const VSPath &path);
 };
 
+// Based on russian Wikipedia page for Dijkstra's algorithm:
+// https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%94%D0%B5%D0%B9%D0%BA%D1%81%D1%82%D1%80%D1%8B
+// and Quora's examples of implementation:
+// https://www.quora.com/What-is-the-most-simple-efficient-C++-code-for-Dijkstras-shortest-path-algorithm
+
 class DijkstraAlgorithm {
 
 private:

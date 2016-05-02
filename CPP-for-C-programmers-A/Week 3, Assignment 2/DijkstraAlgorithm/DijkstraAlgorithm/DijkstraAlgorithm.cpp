@@ -60,10 +60,10 @@ VSPath DijkstraAlgorithm::calculateShortestPath(int source, int destination) {
             if (visited[neighbour] == false && history[neighbour].distance > (history[currentVertexPair.vertex].distance + distance)) {
                 history[neighbour].distance =  history[currentVertexPair.vertex].distance + distance;
 
-                vector<int> newStory = history[currentVertexPair.vertex].path;
-                newStory.push_back(neighbour);
+                vector<int> newPath = history[currentVertexPair.vertex].path;
+                newPath.push_back(neighbour);
 
-                history[neighbour].path = newStory;
+                history[neighbour].path = newPath;
 
                 queue.push(VDPair(neighbour, history[neighbour].distance) );
             }

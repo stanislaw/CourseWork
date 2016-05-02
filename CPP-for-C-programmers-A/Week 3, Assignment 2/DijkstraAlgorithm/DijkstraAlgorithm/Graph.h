@@ -22,12 +22,14 @@ public:
     Graph(int V);
 
     int getV() const;
+
     int getE();
 
     void addEdge(int x, int y, int distance);
-    void removeEdge(int x, int y);
 
     bool adjacent(int x, int y);
+
+    // lists all nodes y such that there is an edge from x to y.
     vector<int> neighbors(int x);
 
     int getDistance(int x, int y);

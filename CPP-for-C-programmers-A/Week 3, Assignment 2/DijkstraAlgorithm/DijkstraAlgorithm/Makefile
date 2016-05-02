@@ -1,6 +1,6 @@
 appname := dijkstra
 
-CXX := clang++
+CXX := gcc++
 CXXFLAGS := -std=c++11
 
 srcfiles := $(wildcard *.cpp)

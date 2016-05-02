@@ -15,7 +15,6 @@
 const int NoDistance = 0;
 
 Graph::Graph(int V) {
-    // TODO: write test for default value 0
     std::vector<std::vector<int>> matrix(
                                          V,
                                          std::vector<int>(V, NoDistance));
@@ -23,12 +22,10 @@ Graph::Graph(int V) {
     this->matrix = matrix;
 }
 
-// returns the number of vertices in the graph
 int Graph::getV() const {
     return static_cast<int>(matrix.size());
 };
 
-// returns the number of edges in the graph
 int Graph::getE() {
     int size = getV();
 
@@ -51,12 +48,6 @@ int Graph::getE() {
     return E;
 };
 
-// tests whether there is an edge from node x to node y.
-bool Graph::adjacent(int x, int y) {
-    return matrix[x][y] != NoDistance;
-}
-
-// lists all nodes y such that there is an edge from x to y.
 vector<int> Graph::neighbors(int x) {
     int size = getV();
 
@@ -95,11 +86,6 @@ void Graph::addEdge(int x, int y, int distance) {
     this->matrix[y][x] = distance;
 }
 
-// removes the edge from x to y, if it is there.
-void Graph::removeEdge(int x, int y) {
-    //
-}
-
 ostream& operator<<(ostream& os, const Graph &graph) {
     int size = graph.getV();
 
@@ -117,8 +103,6 @@ ostream& operator<<(ostream& os, const Graph &graph) {
 }
 
 #pragma mark - Tests
-
-// Initialization
 
 void testGraph_Initialization_With0Vertices_getV_is0() {
     Graph graph = Graph(0);
@@ -138,8 +122,6 @@ void testGraph_Initialization_getE() {
     assert(graph.getE() == 0);
 }
 
-//
-
 void testGraph_addingEdge() {
     Graph graph = Graph(3);
 
@@ -150,24 +132,6 @@ void testGraph_addingEdge() {
     graph.addEdge(2, 0, distanceNotRelevant);
 
     assert(graph.getE() == 3);
-}
-
-void testGraph_adjacent() {
-    Graph graph = Graph(3);
-
-    int distanceNotRelevant = 27;
-
-    assert(graph.adjacent(0, 1) == false);
-    assert(graph.adjacent(1, 2) == false);
-    assert(graph.adjacent(2, 0) == false);
-
-    graph.addEdge(0, 1, distanceNotRelevant);
-    graph.addEdge(1, 2, distanceNotRelevant);
-    graph.addEdge(2, 0, distanceNotRelevant);
-
-    assert(graph.adjacent(0, 1));
-    assert(graph.adjacent(1, 2));
-    assert(graph.adjacent(2, 0));
 }
 
 void testGraph_neighbors() {
@@ -186,6 +150,7 @@ void testGraph_neighbors() {
     neighbors = graph.neighbors(0);
 
     assert(neighbors.size() == 2);
+    assert(neighbors == vector<int>({1, 2}));
 }
 
 // Test suite
@@ -196,6 +161,5 @@ void testGraph() {
     testGraph_Initialization_getE();
     
     testGraph_addingEdge();
-    testGraph_adjacent();
     testGraph_neighbors();
 }
