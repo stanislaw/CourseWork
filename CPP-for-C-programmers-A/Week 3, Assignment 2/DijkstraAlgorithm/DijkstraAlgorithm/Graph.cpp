@@ -105,6 +105,7 @@ ostream& operator<<(ostream& os, const Graph &graph) {
 
     for (int i = 0; i < size; ++i) {
         os << '[' << i << ']' << " ";
+
         for (int j = 0; j < size; ++j) {
             os << graph.matrix[i][j] << ' ';
         }

@@ -1,3 +1,21 @@
+appname := dijkstra
+
+CXX := clang++
+CXXFLAGS := -std=c++11
+
+srcfiles := $(wildcard *.cpp)
+objects  := $(patsubst %.cpp, %.o, $(srcfiles))
+
+default: build run
 
 run:
-	clang main.cpp
+	./$(appname)
+
+build: $(appname)
+
+$(appname): $(objects)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(appname) $(objects) $(LDLIBS)
+
+clean:
+	rm -f $(objects)
+
