@@ -1,0 +1,25 @@
+C++ for C Programmers - Assignment 2
+
+Learnings from Implementing Dijkstra's Shortest Path Algorithm
+
+Graphs :
+Graphs are an important data structure that not only has lots of academic interest but has immense practical application. Dijkstra's shortest path algorithm is one of the most famous and widely used algorithms
+which has its use in a wide variety of applications like GPS etc.
+
+As far as the implementation of the graphs are considered, I have chosen an adjaceny matrix implementation over the list implementation. One of the reasons for this is I have preferred time efficiency over space efficieny.
+In other words, memory these days is cheap and hence its ok to use up a little bit more memory if it can aide performance. A matrix representation has pretty much O(1) access time to any index of the array and hence there is
+not too much of a traversal time involved. Also adjaceny matrices make a simpler implementation than compared to a list.
+
+Implementing graphs as a data structure is far more easier, understandable in C++ than compared to C. Though C provides for concatenating multiple primitive data types using a struct, it is not as powerful as an object.
+Defining an object in terms of abstarctions helps us define the charectistics of the object without having to worry about the implementation details. For example, we can define what all the possible public API's our graph implementation
+should include and the actual implementation can be done in a variety of ways.
+
+Managing objects in this particual case graph object and the Dijkstra object is far more easier if the objects are defined with the single responsibility principle in mind. Each object has a well defined characteristics and the way they interact with
+other objects can also be fairly well defined. In this assignment, I have implemented a bunch of API's on the graph object as suggested in the assignment, but I did not really have to use them all in the scope of this particualr problem.
+Howevere these API's / public methods are extremely valuable had my implemenation of Dijkstra's algorithm been different or, for solving many other complex graph theory problems these API's will come in handy.
+
+As far as the graph generation algorithm is concerned, the number of nodes and the density have an interesting relationship. The more the number of nodes, the more connected the graph is for the same probablity density than for a graph
+with a smaller number of nodes. Another way to put the same is if you have a small graph and would like it to be more connected, you need to increase the density. The more connected the graph is the average shortest distance path from
+a node to all connected nodes is less. In other words, improved connectivity reduces the average distance between any two given nodes of a graph.
+As you can see from the code, when the density is higher (40%), which means the graph is more connected the average shortest distance is smaller (in the example outputs I have provided it is 3), while compared to a less connected graph
+(probability density 20%) for the same number of nodes, where the average shortest distance path is 8(again based on the output diagrams I have provided.)

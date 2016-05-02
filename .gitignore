@@ -1,2 +1,15 @@
+Build/
+
+**/DerivedData/**
+
+F1.xcodeproj/project.xcworkspace/xcshareddata/
+F1.xcodeproj/project.xcworkspace/xcuserdata/
+
+**/xcuserdata/**
+*.swp
+
 *.o
+*.loh
+*.clog
+*.exe
 
