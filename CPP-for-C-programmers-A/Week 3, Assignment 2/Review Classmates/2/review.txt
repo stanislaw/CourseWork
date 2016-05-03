@@ -1,0 +1,50 @@
+Hello Matteo,
+
+Looks like you did not implement PriorityQueue backed by minHeap as your FastQueue is just a vector where you iterate over the whole vector each time you call pop(). Also in pop() method you iterate over nodes two times - isn't it possible to accomplish what you need using one iteration?
+
+Line 407: if (neighbors.size() > 0) seems to be redundant - you'll not enter for loop if there are no neighbours.
+
+Line 124: variable name temp_vec seems quite confusing - you're creating the second dimension for you matrix - why "temp" then?
+
+Lines 122-126 - you could initialize vector with default value 0 and then omit doing "else {edges_matrix[i][j] = edges_matrix[j][i] = 0.0;" (google for "vector constructor default value").
+
+Line 220-221: You're definitely missing complementary:
+    edges_matrix[j][i] = val; (I did try my tests on your Graph and they failed because of this line was missing however I found that it is not used in your final MC simulation).
+
+Nice trick with maintaining the path vertexes as linked list getPrev/setPrev. I only came up with keeping the whole history for each vertex in the vectors.
+
+The remaining comments are advices:
+
+1) In my homework I also created separate class GraphBuilder which encapsulates the procedure of building a graph. My Graph is just a plain graph class - it knows nothing about probabilities - so I find my Graph class much easier to read than yours. For example addEdge method merely adds edge - the probability of whether we should add edge or not goes to GraphBuilder. So both classes are much easier to read and understand. Your Graph is harder to read because you made it very specific i.e. dependent on details of this specific simulation. I believe you are aware of Single Responsibility Principle - https://en.wikipedia.org/wiki/Single_responsibility_principle - it is great concept which might provide you with rational for having small focused classes doing one job well.
+
+2) I use TDD approach to implement my homework tasks: tests are great additional way of proving that your code actually works. Here is example of test from my homework:
+
+#include "Graph.h"
+
+#include <cassert>
+
+void test_calculateShortestPathDistance_threeElements() {
+    Graph graph(3);
+
+    graph.addEdge(0, 1, 11);
+    graph.addEdge(1, 2, 22);
+    graph.addEdge(0, 2, 5);
+
+    DijkstraAlgorithm algorithm(graph);
+
+    int shortestPathDistance = algorithm.calculateShortestPathDistance(0, 2);
+
+    assert(shortestPathDistance == 5);
+}
+
+If shortestPathDistance is not 5 this test will fail clearly showing you the source line. For this homework I have around 20-30 tests: Graph, PriorityQueue, DijkstraAlgorithm, GraphBuilder - all these classes are covered with basic tests.
+
+I highly encourage you to adopt this approach.
+
+3) I believe it is not a requirement for assigment but I did split my classes into separate files, added Makefile to build them so my overall submission was 5 .cpp files, 4 headers and one Makefile. Much easier to read & navigate.
+
+Otherwise, great work! I'll subtract one point for efficiency. All other aspects are good.
+
+Stanislav
+
+
