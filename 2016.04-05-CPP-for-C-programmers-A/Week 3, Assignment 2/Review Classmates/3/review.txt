@@ -1,0 +1,49 @@
+Hello Yilun,
+
+Overall implementation looks good. However here are a few comments on the issues I'm seeing in your work:
+
+1) Line 18: double** m_graph; why didn't use use two dimensional vector? That would be a proper CPP style corresponding to lectures (the same for line 101: double **m_graph_2D_array;).
+
+2) You didn't really follow the interface suggested in the task description: you calculate algorithm right in the constructor of ShortestPath while suggested interface clearly indicates that you should have implemented:
+    vertices(List): list of vertices in G(V,E).
+    path(u, w): find shortest path between u-w and returns the sequence of vertices representing shorest path u-v1-v2-…-vn-w.
+    path_size(u, w): return the path cost associated with the shortest path.
+
+Generally it is bad OOP practice to do everything in constructors. Constructor - is a method which prepares all needed in your object so that it can do its work. You should rather have separate methods path(u, w) and path_size(u, w) to do the actual algorithm processing.
+
+3) Also you didn't implement the functionality suggested by path(u, w): method which also gives you the actual path that constitutes the shortest path from source to destination.
+
+4) Why have two matrixes: "// weight matrix is the same as **m_graph of graph object" (you could just reuse the matrix you created in Graph) ?!
+
+Here are advices:
+
+1) In my homework I also created separate class GraphBuilder which encapsulates the procedure of building a graph. My Graph is just a plain graph class - it knows nothing about probabilities - so I find my Graph class much easier to read than yours. For example addEdge method merely adds edge - the probability of whether we should add edge or not goes to GraphBuilder. So both classes are much easier to read and understand. Your Graph is harder to read because you made it very specific i.e. dependent on details of this specific simulation. I believe you are aware of Single Responsibility Principle - https://en.wikipedia.org/wiki/Single_responsibility_principle - it is great concept which might provide you with rational for having small focused classes doing one job well.
+
+2) I use TDD approach to implement my homework tasks: tests are great additional way of proving that your code actually works. Here is example of test from my homework:
+
+#include "Graph.h"
+
+#include <cassert>
+
+void test_calculateShortestPathDistance_threeElements() {
+    Graph graph(3);
+
+    graph.addEdge(0, 1, 11);
+    graph.addEdge(1, 2, 22);
+    graph.addEdge(0, 2, 5);
+
+    DijkstraAlgorithm algorithm(graph);
+
+    int shortestPathDistance = algorithm.calculateShortestPathDistance(0, 2);
+
+    assert(shortestPathDistance == 5);
+}
+
+If shortestPathDistance is not 5 this test will fail clearly showing you the source line. For this homework I have around 20-30 tests: Graph, PriorityQueue, DijkstraAlgorithm, GraphBuilder - all these classes are covered with basic tests.
+
+I highly encourage you to adopt this approach.
+
+Good work in all other aspects!
+
+Stanislav
+
