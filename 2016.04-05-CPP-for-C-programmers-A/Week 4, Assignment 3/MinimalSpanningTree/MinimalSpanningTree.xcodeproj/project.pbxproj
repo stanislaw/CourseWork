@@ -32,6 +32,7 @@
 		86E26E401CDD222900D5D039 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		86E26E411CDD222900D5D039 /* PriorityQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PriorityQueue.cpp; sourceTree = "<group>"; };
 		86E26E421CDD222900D5D039 /* PriorityQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriorityQueue.h; sourceTree = "<group>"; };
+		86E26E461CDD2BA000D5D039 /* TestData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestData.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +71,7 @@
 				86E26E411CDD222900D5D039 /* PriorityQueue.cpp */,
 				86E26E421CDD222900D5D039 /* PriorityQueue.h */,
 				86E26E371CDD21DA00D5D039 /* main.cpp */,
+				86E26E461CDD2BA000D5D039 /* TestData.txt */,
 			);
 			path = MinimalSpanningTree;
 			sourceTree = "<group>";

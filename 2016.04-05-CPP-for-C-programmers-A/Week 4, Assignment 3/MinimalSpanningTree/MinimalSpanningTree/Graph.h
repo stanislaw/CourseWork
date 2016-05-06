@@ -34,6 +34,8 @@ public:
 
     int getDistance(int x, int y);
 
+    bool isConnected();
+
     friend ostream& operator<<(ostream& os, const Graph &graph);
 };
 

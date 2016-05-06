@@ -18,5 +18,7 @@ int main(int argc, const char * argv[]) {
     testGraph();
     testPriorityQueue();
 
+    // assert(graph.isConnected());
+
     return 0;
 }

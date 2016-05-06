@@ -86,6 +86,18 @@ void Graph::addEdge(int x, int y, int distance) {
     this->matrix[y][x] = distance;
 }
 
+bool Graph::isConnected() {
+    int size = getV();
+
+    for (int i = 0; i < size; i++) {
+        if (neighbors(i).size() == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 ostream& operator<<(ostream& os, const Graph &graph) {
     int size = graph.getV();
 
@@ -153,6 +165,23 @@ void testGraph_neighbors() {
     assert(neighbors == vector<int>({1, 2}));
 }
 
+void testGraph_isConnected_noEdges_should_be_false() {
+    Graph graph = Graph(3);
+
+    assert(graph.isConnected() == false);
+}
+
+void testGraph_isConnected_3edges_should_be_true() {
+    Graph graph = Graph(3);
+
+    int distanceNotRelevant = 27;
+
+    graph.addEdge(0, 1, distanceNotRelevant);
+    graph.addEdge(1, 2, distanceNotRelevant);
+
+    assert(graph.isConnected());
+}
+
 // Test suite
 
 void testGraph() {
@@ -162,4 +191,7 @@ void testGraph() {
     
     testGraph_addingEdge();
     testGraph_neighbors();
+
+    testGraph_isConnected_noEdges_should_be_false();
+    testGraph_isConnected_3edges_should_be_true();
 }
