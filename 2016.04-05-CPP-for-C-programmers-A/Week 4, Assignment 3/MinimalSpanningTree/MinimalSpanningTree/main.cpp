@@ -13,6 +13,7 @@
 
 
 int main(int argc, const char * argv[]) {
+    cout << "PriorityQueue: I couldn't make it to work with templates in my previous home work. Here it is working..." << endl;
 
     testGraph();
     testPriorityQueue();

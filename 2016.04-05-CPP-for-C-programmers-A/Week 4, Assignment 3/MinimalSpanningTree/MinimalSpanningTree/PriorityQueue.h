@@ -37,7 +37,6 @@ private:
     void bubbleDown(int index);
     void bubbleUp(int index);
     void swap(int x, int y);
-    
 };
 
 void testPriorityQueue();

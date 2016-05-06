@@ -86,7 +86,7 @@ void Graph::addEdge(int x, int y, int distance) {
     this->matrix[y][x] = distance;
 }
 
-ostream& operator<<(ostream& os, const Graph &graph) {
+ostream& operator << (ostream& os, const Graph &graph) {
     int size = graph.getV();
 
     for (int i = 0; i < size; ++i) {

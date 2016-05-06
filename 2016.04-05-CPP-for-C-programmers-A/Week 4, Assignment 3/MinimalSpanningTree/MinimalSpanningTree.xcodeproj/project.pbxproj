@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		86E26E381CDD21DA00D5D039 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E371CDD21DA00D5D039 /* main.cpp */; };
 		86E26E431CDD222900D5D039 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E3E1CDD222900D5D039 /* Graph.cpp */; };
-		86E26E441CDD222900D5D039 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E401CDD222900D5D039 /* Makefile */; };
 		86E26E451CDD222900D5D039 /* PriorityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E411CDD222900D5D039 /* PriorityQueue.cpp */; };
 /* End PBXBuildFile section */
 
@@ -131,7 +130,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E26E441CDD222900D5D039 /* Makefile in Sources */,
 				86E26E451CDD222900D5D039 /* PriorityQueue.cpp in Sources */,
 				86E26E431CDD222900D5D039 /* Graph.cpp in Sources */,
 				86E26E381CDD21DA00D5D039 /* main.cpp in Sources */,

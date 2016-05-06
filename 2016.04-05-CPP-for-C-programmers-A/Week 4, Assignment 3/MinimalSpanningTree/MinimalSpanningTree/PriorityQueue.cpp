@@ -66,7 +66,7 @@ void PriorityQueue<T>::bubbleDown(int index) {
     int rightChildIndex = 2 * index + 2;
 
     if (leftChildIndex >= length) {
-        return; // index is a leaf
+        return;
     }
 
     int tempIndex = index;
@@ -162,6 +162,37 @@ void test_deleteMin() {
     assert(queue.getMin() == 3);
 }
 
+struct TestPair {
+
+private:
+    int vertex;
+
+public:
+    TestPair(int vertex) : vertex(vertex) {}
+
+    friend bool operator > (const TestPair& l, const TestPair& r);
+    friend bool operator == (const TestPair& l, const TestPair& r);
+};
+
+bool operator > (const TestPair& l, const TestPair& r) {
+    return l.vertex > r.vertex;
+}
+
+bool operator==(const TestPair& l, const TestPair& r) {
+    return l.vertex == r.vertex;
+}
+
+void test_userTypes_integrationTest() {
+    PriorityQueue<TestPair> queue = PriorityQueue<TestPair>(vector<TestPair>());
+
+    queue.insert(TestPair(4));
+    queue.insert(TestPair(3));
+    queue.insert(TestPair(5));
+    queue.insert(TestPair(1));
+
+    assert(queue.getMin() == TestPair(1));
+}
+
 void testPriorityQueue() {
     test_isEmpty_withEmptyVector();
     test_isEmpty_withSomeElements();
@@ -172,6 +203,7 @@ void testPriorityQueue() {
     test_deleteMin();
 
     test_initialization_values();
+    test_userTypes_integrationTest();
 }
 
 /**
