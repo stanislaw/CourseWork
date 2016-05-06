@@ -25,6 +25,7 @@ private:
     vector<T> minHeap;
 
 public:
+    PriorityQueue();
     PriorityQueue(vector<T> array);
 
     bool isEmpty();

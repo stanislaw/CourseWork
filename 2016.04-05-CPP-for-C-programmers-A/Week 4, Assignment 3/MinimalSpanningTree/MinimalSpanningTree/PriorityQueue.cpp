@@ -12,6 +12,10 @@
 #include <iostream>
 
 template <class T>
+PriorityQueue<T>::PriorityQueue() : minHeap() {
+}
+
+template <class T>
 PriorityQueue<T>::PriorityQueue(vector<T> array) : minHeap(array) {
     heapify();
 }
@@ -32,6 +36,15 @@ void PriorityQueue<T>::insert(T newValue) {
 
 template <class T>
 T PriorityQueue<T>::getMin() {
+    // I am not sure what is a good practice in CPP to handle this case
+    // I was thinking about returning default constructor: T() but
+    // that can cause ambiguity for some types of T
+    // So here I prefer to fail early to know that something is going wrong
+    // if one tries to get an element from empty queue
+    if (isEmpty()) {
+        throw "Queue is empty!";
+    }
+
     return minHeap[0];
 }
 
@@ -162,6 +175,8 @@ void test_deleteMin() {
     assert(queue.getMin() == 3);
 }
 
+// This structure is for testing purposes only:
+// to test how PriorityQueue works with user-defined types
 struct TestPair {
 
 private:
@@ -174,16 +189,18 @@ public:
     friend bool operator == (const TestPair& l, const TestPair& r);
 };
 
+// This is needed to teach PriorityQueue to do comparisons on TestPair
 bool operator > (const TestPair& l, const TestPair& r) {
     return l.vertex > r.vertex;
 }
 
+// This is to learn how to compare user-defined types (and to see how friends works: 'vertex' can be now made private)
 bool operator==(const TestPair& l, const TestPair& r) {
     return l.vertex == r.vertex;
 }
 
-void test_userTypes_integrationTest() {
-    PriorityQueue<TestPair> queue = PriorityQueue<TestPair>(vector<TestPair>());
+void test_userDeclaredTypes() {
+    PriorityQueue<TestPair> queue;
 
     queue.insert(TestPair(4));
     queue.insert(TestPair(3));
@@ -191,9 +208,16 @@ void test_userTypes_integrationTest() {
     queue.insert(TestPair(1));
 
     assert(queue.getMin() == TestPair(1));
+    queue.deleteMin();
+    assert(queue.getMin() == TestPair(3));
+    queue.deleteMin();
+    assert(queue.getMin() == TestPair(4));
+    queue.deleteMin();
+    assert(queue.getMin() == TestPair(5));
 }
 
 void testPriorityQueue() {
+    test_initialization_values();
     test_isEmpty_withEmptyVector();
     test_isEmpty_withSomeElements();
 
@@ -202,8 +226,7 @@ void testPriorityQueue() {
 
     test_deleteMin();
 
-    test_initialization_values();
-    test_userTypes_integrationTest();
+    test_userDeclaredTypes();
 }
 
 /**
