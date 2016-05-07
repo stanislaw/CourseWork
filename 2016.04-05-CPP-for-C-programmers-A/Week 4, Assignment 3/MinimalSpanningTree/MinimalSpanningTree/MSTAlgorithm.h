@@ -11,7 +11,26 @@
 
 #include "Graph.h"
 
+#include <iostream>
+
 using namespace std;
+
+struct MSTEdge {
+    int vertexA;
+    int vertexB;
+
+    MSTEdge() : vertexA(-1), vertexB(-1) {}
+    MSTEdge(int vertexA, int vertexB) : vertexA(vertexA), vertexB(vertexB) {}
+};
+
+struct MST {
+    vector<MSTEdge> edges;
+    int cost;
+
+    MST(vector<MSTEdge> edges, int cost) : edges(edges), cost(cost) {}
+};
+
+ostream& operator<<(ostream& os, const MST &mst);
 
 class MSTAlgorithm {
 
@@ -21,7 +40,7 @@ private:
 public:
     MSTAlgorithm(Graph graph);
 
-    vector <int> calculateMST(int source);
+    MST calculateMST(int source);
 };
 
 void testMSTAlgorithm();

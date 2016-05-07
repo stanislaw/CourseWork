@@ -29,5 +29,9 @@ int main(int argc, const char * argv[]) {
 
     MSTAlgorithm algorithm(graph);
 
+    MST mst = algorithm.calculateMST(0);
+
+    cout << mst << endl;
+
     return 0;
 }
