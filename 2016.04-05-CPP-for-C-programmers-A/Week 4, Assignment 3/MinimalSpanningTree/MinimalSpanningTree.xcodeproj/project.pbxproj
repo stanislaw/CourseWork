@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8615558A1CDE2F7B0040234E /* TestData.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 86E26E461CDD2BA000D5D039 /* TestData.txt */; };
 		86E26E381CDD21DA00D5D039 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E371CDD21DA00D5D039 /* main.cpp */; };
 		86E26E431CDD222900D5D039 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E3E1CDD222900D5D039 /* Graph.cpp */; };
 		86E26E451CDD222900D5D039 /* PriorityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E411CDD222900D5D039 /* PriorityQueue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		86E26E321CDD21DA00D5D039 /* CopyFiles */ = {
+		861555891CDE2F030040234E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				8615558A1CDE2F7B0040234E /* TestData.txt in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -85,7 +87,7 @@
 			buildPhases = (
 				86E26E301CDD21DA00D5D039 /* Sources */,
 				86E26E311CDD21DA00D5D039 /* Frameworks */,
-				86E26E321CDD21DA00D5D039 /* CopyFiles */,
+				861555891CDE2F030040234E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -253,6 +255,7 @@
 				86E26E3D1CDD21DA00D5D039 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

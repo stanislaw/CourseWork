@@ -1,6 +1,6 @@
-appname := dijkstra
+appname := minimal-spanning-tree
 
-CXX := gcc++
+CXX := clang++
 CXXFLAGS := -std=c++11
 
 srcfiles := $(wildcard *.cpp)
