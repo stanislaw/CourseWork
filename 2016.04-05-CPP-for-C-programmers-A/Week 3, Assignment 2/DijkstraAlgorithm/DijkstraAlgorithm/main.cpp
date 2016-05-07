@@ -58,7 +58,7 @@ int main(int argc, const char * argv[]) {
     // 50 vertexes, 40% density
     GraphBuilder builder_50_40(size, 0.4, 1, 9);
     Graph graph_50_40 = builder_50_40.build();
-    
+
     int shortestPathSum_50_40 = 0;
 
     for (int i = 1; i < size; i++) {

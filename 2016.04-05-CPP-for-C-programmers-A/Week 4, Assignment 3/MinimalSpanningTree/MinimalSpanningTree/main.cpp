@@ -9,6 +9,7 @@
 #include "Graph.h"
 #include "GraphBuilder.h"
 #include "PriorityQueue.h"
+#include "MSTAlgorithm.h"
 
 #include <iostream>
 
@@ -25,6 +26,7 @@ int main(int argc, const char * argv[]) {
 
     Graph graph = graphBuilder.build();
 
+    MSTAlgorithm algorithm(graph);
 
     return 0;
 }
