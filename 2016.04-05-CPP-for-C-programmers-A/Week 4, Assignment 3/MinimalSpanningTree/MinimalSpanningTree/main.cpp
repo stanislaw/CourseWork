@@ -21,6 +21,7 @@ int main(int argc, const char * argv[]) {
     testGraph();
     testPriorityQueue();
     testGraphBuilder();
+    testMSTAlgorithm();
 
     GraphBuilder graphBuilder("TestData.txt");
 

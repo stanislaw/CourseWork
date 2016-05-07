@@ -24,4 +24,6 @@ public:
     vector <int> calculateMST(int source);
 };
 
+void testMSTAlgorithm();
+
 #endif /* MSTAlgorithm_h */
