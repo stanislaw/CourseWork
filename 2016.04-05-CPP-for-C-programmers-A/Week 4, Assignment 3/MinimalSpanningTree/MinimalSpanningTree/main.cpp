@@ -7,39 +7,24 @@
 //
 
 #include "Graph.h"
+#include "GraphBuilder.h"
 #include "PriorityQueue.h"
 
-#include <fstream>
 #include <iostream>
-#include <iterator>
-
-using namespace std;
-
-struct Tripple {
-    int a;
-    int b;
-    int c;
-};
 
 int main(int argc, const char * argv[]) {
     cout << "PriorityQueue: I couldn't make it to work with templates in my previous home work. Here it is working..." << endl;
+    cout << "I use separate class GraphBuilder which encapsulates the procedure of creating a graph from file..." << endl;
+    cout << "I experimented on how to read a file right to my custom structure and it worked. For the final code I use ifstream and istream iterators. Not sure what is proper CPP way of handling error: what if file input is malformed?" << endl;
 
     testGraph();
     testPriorityQueue();
+    testGraphBuilder();
 
-    // assert(graph.isConnected());
+    GraphBuilder graphBuilder("TestData.txt");
 
-    ifstream inputFile("TestData.txt");
-    if (inputFile.fail()) {
-        throw "File does not exist";
-    }
+    Graph graph = graphBuilder.build();
 
-    istream_iterator<int> begin(inputFile);
-    istream_iterator<int> end;
-
-    for(istream_iterator<int> it = begin; it != end; ++it) {
-        cout << (*it) << "@@\n";
-    }
 
     return 0;
 }

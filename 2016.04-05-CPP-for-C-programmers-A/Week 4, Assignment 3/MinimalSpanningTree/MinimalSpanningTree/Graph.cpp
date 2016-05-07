@@ -98,6 +98,8 @@ bool Graph::isConnected() {
     return true;
 }
 
+// IO
+
 ostream& operator<<(ostream& os, const Graph &graph) {
     int size = graph.getV();
 

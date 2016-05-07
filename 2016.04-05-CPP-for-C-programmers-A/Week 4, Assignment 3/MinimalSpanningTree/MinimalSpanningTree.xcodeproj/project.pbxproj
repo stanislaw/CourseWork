@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8615558A1CDE2F7B0040234E /* TestData.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 86E26E461CDD2BA000D5D039 /* TestData.txt */; };
+		8615558D1CDE38A60040234E /* GraphBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8615558B1CDE38A60040234E /* GraphBuilder.cpp */; };
 		86E26E381CDD21DA00D5D039 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E371CDD21DA00D5D039 /* main.cpp */; };
 		86E26E431CDD222900D5D039 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E3E1CDD222900D5D039 /* Graph.cpp */; };
 		86E26E451CDD222900D5D039 /* PriorityQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E26E411CDD222900D5D039 /* PriorityQueue.cpp */; };
@@ -27,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8615558B1CDE38A60040234E /* GraphBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GraphBuilder.cpp; path = "../../../../../../../stanislaw/Projects/Coursera/2016.04-05-CPP-for-C-programmers-A/Week 4, Assignment 3/MinimalSpanningTree/MinimalSpanningTree/GraphBuilder.cpp"; sourceTree = "<group>"; };
+		8615558C1CDE38A60040234E /* GraphBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphBuilder.h; path = "../../../../../../../stanislaw/Projects/Coursera/2016.04-05-CPP-for-C-programmers-A/Week 4, Assignment 3/MinimalSpanningTree/MinimalSpanningTree/GraphBuilder.h"; sourceTree = "<group>"; };
 		86E26E341CDD21DA00D5D039 /* MinimalSpanningTree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MinimalSpanningTree; sourceTree = BUILT_PRODUCTS_DIR; };
 		86E26E371CDD21DA00D5D039 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		86E26E3E1CDD222900D5D039 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
@@ -74,6 +77,8 @@
 				86E26E421CDD222900D5D039 /* PriorityQueue.h */,
 				86E26E371CDD21DA00D5D039 /* main.cpp */,
 				86E26E461CDD2BA000D5D039 /* TestData.txt */,
+				8615558C1CDE38A60040234E /* GraphBuilder.h */,
+				8615558B1CDE38A60040234E /* GraphBuilder.cpp */,
 			);
 			path = MinimalSpanningTree;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 			files = (
 				86E26E451CDD222900D5D039 /* PriorityQueue.cpp in Sources */,
 				86E26E431CDD222900D5D039 /* Graph.cpp in Sources */,
+				8615558D1CDE38A60040234E /* GraphBuilder.cpp in Sources */,
 				86E26E381CDD21DA00D5D039 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
