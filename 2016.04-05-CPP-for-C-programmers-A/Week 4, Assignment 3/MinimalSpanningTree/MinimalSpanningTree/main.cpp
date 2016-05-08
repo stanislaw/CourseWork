@@ -30,6 +30,15 @@ int main(int argc, const char * argv[]) {
 
     MSTAlgorithm algorithm(graph);
 
+    // Here we test invariants:
+    // Tree should have the same minimal cost independent
+    // of vertex that we calculate MST from
+    for (int i = 0; i < 20; i++) {
+        MST mst = algorithm.calculateMST(i);
+
+        assert(mst.cost == 30);
+    }
+
     MST mst = algorithm.calculateMST(0);
     assert(mst.cost == 30);
 

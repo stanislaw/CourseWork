@@ -43,48 +43,30 @@ MSTAlgorithm::MSTAlgorithm(Graph graph) : graph(graph) {
 MST MSTAlgorithm::calculateMST(int source) {
     int size = graph.getV();
 
-    vector<bool> used(size, false);
-    vector<int> min_e(size, INT_MAX);
-    vector<int> edges(size, -1);
+    vector<bool> mst(size, false);
+    vector<int> minimalEdgeDistances(size, INT_MAX);
+    vector<int> minimalEdges(size, -1);
 
-    min_e[source] = 0;
+    minimalEdgeDistances[source] = 0;
 
     for (int i = 0; i < size; ++i) {
-//        cout << "outer cycle: " << i << endl;
-
         int v = -1;
 
         for (int j = 0; j < size; ++j) {
-            if (!used[j] && (v == -1 || min_e[j] < min_e[v])) {
+            if (!mst[j] && (v == -1 || minimalEdgeDistances[j] < minimalEdgeDistances[v])) {
                 v = j;
             }
         }
 
-        if (min_e[v] == INT_MAX) {
-            cout << "No MST!";
-            exit(0);
-        }
-
-        used[v] = true;
+        mst[v] = true;
 
         for (int to = 0; to < size; ++to) {
-            if (used[to]) continue;
+            if (mst[to]) continue;
 
-            //cout << "looking neighbour: " << to << endl;
+            if (graph.getDistance(v, to) < minimalEdgeDistances[to]) {
+                minimalEdgeDistances[to] = graph.getDistance(v, to);
 
-            if (graph.getDistance(v, to) < min_e[to]) {
-//                if (to == 0) {
-//                    cout << "0 is neighbour!" << endl;
-//                }
-//
-//                if (edges[to] == 0) {
-//                    cout << "0 is parent which is going to be rewritten!" << endl;
-//                }
-
-                //cout << "rewriting edge: " << v << ", " << to << '(' << graph.getDistance(v, to) << ')' << endl;
-
-                min_e[to] = graph.getDistance(v, to);
-                edges[to] = v;
+                minimalEdges[to] = v;
             }
         }
     }
@@ -93,19 +75,21 @@ MST MSTAlgorithm::calculateMST(int source) {
 
     int cost = 0;
     for (int i = 0; i < size; i++) {
-        assert(min_e[i] != INT_MAX);
-        if (edges[i] == -1) {
+        // TODO
+        assert(minimalEdgeDistances[i] != INT_MAX);
+
+        if (minimalEdges[i] == -1) {
             continue;
         }
 
-        resultEdges.push_back(MSTEdge(edges[i], i));
+        resultEdges.push_back(MSTEdge(minimalEdges[i], i));
 
-        cost += min_e[i];
+        cost += minimalEdgeDistances[i];
     }
 
-    MST mst = MST(resultEdges, cost);
+    MST result = MST(resultEdges, cost);
 
-    return mst;
+    return result;
 }
 
 void testMSTAlgorithm_trivialCase() {
@@ -162,6 +146,12 @@ void testMSTAlgorithm_trivialCase_3() {
     MST mst = algorithm.calculateMST(0);
 
     assert(mst.cost == 3);
+
+    assert(mst.edges[0].vertexA == 0);
+    assert(mst.edges[0].vertexB == 1);
+
+    assert(mst.edges[1].vertexA == 0);
+    assert(mst.edges[1].vertexB == 2);
 }
 
 void testMSTAlgorithm_trivialCase_4() {
@@ -176,6 +166,12 @@ void testMSTAlgorithm_trivialCase_4() {
     MST mst = algorithm.calculateMST(0);
 
     assert(mst.cost == 3);
+
+    assert(mst.edges[0].vertexA == 2);
+    assert(mst.edges[0].vertexB == 1);
+
+    assert(mst.edges[1].vertexA == 0);
+    assert(mst.edges[1].vertexB == 2);
 }
 
 void testMSTAlgorithm() {
