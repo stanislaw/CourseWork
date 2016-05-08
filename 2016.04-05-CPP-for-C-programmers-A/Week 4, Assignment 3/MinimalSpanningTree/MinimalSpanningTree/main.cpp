@@ -11,6 +11,7 @@
 #include "PriorityQueue.h"
 #include "MSTAlgorithm.h"
 
+#include <cassert>
 #include <iostream>
 
 int main(int argc, const char * argv[]) {
@@ -30,6 +31,7 @@ int main(int argc, const char * argv[]) {
     MSTAlgorithm algorithm(graph);
 
     MST mst = algorithm.calculateMST(0);
+    assert(mst.cost == 30);
 
     cout << mst << endl;
 

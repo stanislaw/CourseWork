@@ -23,6 +23,7 @@ struct Pair {
 
 ostream& operator<<(ostream& os, const MST &mst) {
     os << "Minimal spanning tree" << endl;
+    os << "Number of edges: " << mst.edges.size() << endl;
     os << "Total cost: " << mst.cost << endl;
     os << "Edges:" << endl;
 
@@ -49,6 +50,8 @@ MST MSTAlgorithm::calculateMST(int source) {
     min_e[source] = 0;
 
     for (int i = 0; i < size; ++i) {
+//        cout << "outer cycle: " << i << endl;
+
         int v = -1;
 
         for (int j = 0; j < size; ++j) {
@@ -65,9 +68,21 @@ MST MSTAlgorithm::calculateMST(int source) {
         used[v] = true;
 
         for (int to = 0; to < size; ++to) {
-            if (to == v) continue;
+            if (used[to]) continue;
+
+            //cout << "looking neighbour: " << to << endl;
 
             if (graph.getDistance(v, to) < min_e[to]) {
+//                if (to == 0) {
+//                    cout << "0 is neighbour!" << endl;
+//                }
+//
+//                if (edges[to] == 0) {
+//                    cout << "0 is parent which is going to be rewritten!" << endl;
+//                }
+
+                //cout << "rewriting edge: " << v << ", " << to << '(' << graph.getDistance(v, to) << ')' << endl;
+
                 min_e[to] = graph.getDistance(v, to);
                 edges[to] = v;
             }
@@ -135,7 +150,37 @@ void testMSTAlgorithm_trivialCase_2() {
     assert(mst.cost == 4);
 }
 
+void testMSTAlgorithm_trivialCase_3() {
+    Graph graph(3);
+
+    graph.addEdge(0, 1, 2);
+    graph.addEdge(0, 2, 1);
+    graph.addEdge(1, 2, 15);
+
+    MSTAlgorithm algorithm(graph);
+
+    MST mst = algorithm.calculateMST(0);
+
+    assert(mst.cost == 3);
+}
+
+void testMSTAlgorithm_trivialCase_4() {
+    Graph graph(3);
+
+    graph.addEdge(0, 1, 3);
+    graph.addEdge(1, 2, 1);
+    graph.addEdge(0, 2, 2);
+
+    MSTAlgorithm algorithm(graph);
+
+    MST mst = algorithm.calculateMST(0);
+
+    assert(mst.cost == 3);
+}
+
 void testMSTAlgorithm() {
     testMSTAlgorithm_trivialCase();
     testMSTAlgorithm_trivialCase_2();
+    testMSTAlgorithm_trivialCase_3();
+    testMSTAlgorithm_trivialCase_4();
 }
