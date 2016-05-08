@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 
-const int NoDistance = INT_MAX;
+const int NoDistance = -1;
 
 Graph::Graph(int V) {
     std::vector<std::vector<int>> matrix(

@@ -40,33 +40,52 @@ MSTAlgorithm::MSTAlgorithm(Graph graph) : graph(graph) {
     }
 }
 
+struct MSTPair {
+    int vertex;
+    int edgeLength;
+
+    MSTPair(int vertex, int edgeLength) : vertex(vertex), edgeLength(edgeLength) {}
+};
+
+// This is needed to teach PriorityQueue to do comparisons on TestPair
+bool operator > (const MSTPair& l, const MSTPair& r) {
+    return l.edgeLength > r.edgeLength;
+}
+
 MST MSTAlgorithm::calculateMST(int source) {
     int size = graph.getV();
 
     vector<bool> mst(size, false);
     vector<int> minimalEdgeDistances(size, INT_MAX);
     vector<int> minimalEdges(size, -1);
+    PriorityQueue<MSTPair> queue;
 
     minimalEdgeDistances[source] = 0;
+    queue.insert(MSTPair(source, 0));
 
-    for (int i = 0; i < size; ++i) {
-        int v = -1;
+    while (queue.isEmpty() == false) {
+        MSTPair currentPair = queue.getMin();
+        queue.deleteMin();
 
-        for (int j = 0; j < size; ++j) {
-            if (!mst[j] && (v == -1 || minimalEdgeDistances[j] < minimalEdgeDistances[v])) {
-                v = j;
+        int currentVertex = currentPair.vertex;
+
+        mst[currentVertex] = true;
+
+        for (int neighbour = 0; neighbour < size; ++neighbour) {
+            if (mst[neighbour]) {
+                continue;
             }
-        }
 
-        mst[v] = true;
+            if (graph.getDistance(currentVertex, neighbour) == NoDistance) {
+                continue;
+            }
 
-        for (int to = 0; to < size; ++to) {
-            if (mst[to]) continue;
+            if (graph.getDistance(currentVertex, neighbour) < minimalEdgeDistances[neighbour]) {
+                minimalEdgeDistances[neighbour] = graph.getDistance(currentVertex, neighbour);
 
-            if (graph.getDistance(v, to) < minimalEdgeDistances[to]) {
-                minimalEdgeDistances[to] = graph.getDistance(v, to);
+                minimalEdges[neighbour] = currentVertex;
 
-                minimalEdges[to] = v;
+                queue.insert(MSTPair(neighbour, minimalEdgeDistances[neighbour]));
             }
         }
     }
@@ -75,7 +94,7 @@ MST MSTAlgorithm::calculateMST(int source) {
 
     int cost = 0;
     for (int i = 0; i < size; i++) {
-        // TODO
+        // TODO: remove after debugging is done
         assert(minimalEdgeDistances[i] != INT_MAX);
 
         if (minimalEdges[i] == -1) {

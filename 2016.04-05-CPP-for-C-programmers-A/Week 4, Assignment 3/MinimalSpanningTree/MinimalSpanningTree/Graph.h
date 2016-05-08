@@ -11,6 +11,8 @@
 
 #include <vector>
 
+extern const int NoDistance;
+
 using namespace std;
 
 class Graph {
@@ -29,7 +31,11 @@ public:
 
     bool adjacent(int x, int y);
 
-    // lists all nodes y such that there is an edge from x to y.
+    // Lists all nodes y such that there is an edge from x to y.
+    // It is not used in MST algorithm because
+    // I didn't find efficient way of caching neighbours
+    // to not perform exhaustive enumeration over all vertexes every time
+    // neighbours(...) is called
     vector<int> neighbors(int x);
 
     int getDistance(int x, int y);
