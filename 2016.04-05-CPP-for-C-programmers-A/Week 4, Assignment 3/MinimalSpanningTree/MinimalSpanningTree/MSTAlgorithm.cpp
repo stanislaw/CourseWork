@@ -56,11 +56,11 @@ MST MSTAlgorithm::calculateMST(int source) {
     int size = graph.getV();
 
     vector<bool> mst(size, false);
-    vector<int> minimalEdgeDistances(size, INT_MAX);
+    vector<int> minimalEdgeCosts(size, INT_MAX);
     vector<int> minimalEdges(size, -1);
     PriorityQueue<MSTPair> queue;
 
-    minimalEdgeDistances[source] = 0;
+    minimalEdgeCosts[source] = 0;
     queue.insert(MSTPair(source, 0));
 
     while (queue.isEmpty() == false) {
@@ -76,16 +76,18 @@ MST MSTAlgorithm::calculateMST(int source) {
                 continue;
             }
 
-            if (graph.getDistance(currentVertex, neighbour) == NoDistance) {
+            int edgeCost = graph.getDistance(currentVertex, neighbour);
+
+            if (edgeCost == NoDistance) {
                 continue;
             }
 
-            if (graph.getDistance(currentVertex, neighbour) < minimalEdgeDistances[neighbour]) {
-                minimalEdgeDistances[neighbour] = graph.getDistance(currentVertex, neighbour);
+            if (edgeCost < minimalEdgeCosts[neighbour]) {
+                minimalEdgeCosts[neighbour] = edgeCost;
 
                 minimalEdges[neighbour] = currentVertex;
 
-                queue.insert(MSTPair(neighbour, minimalEdgeDistances[neighbour]));
+                queue.insert(MSTPair(neighbour, minimalEdgeCosts[neighbour]));
             }
         }
     }
@@ -95,7 +97,7 @@ MST MSTAlgorithm::calculateMST(int source) {
     int cost = 0;
     for (int i = 0; i < size; i++) {
         // TODO: remove after debugging is done
-        assert(minimalEdgeDistances[i] != INT_MAX);
+        assert(minimalEdgeCosts[i] != INT_MAX);
 
         if (minimalEdges[i] == -1) {
             continue;
@@ -103,7 +105,7 @@ MST MSTAlgorithm::calculateMST(int source) {
 
         resultEdges.push_back(MSTEdge(minimalEdges[i], i));
 
-        cost += minimalEdgeDistances[i];
+        cost += minimalEdgeCosts[i];
     }
 
     MST result = MST(resultEdges, cost);
