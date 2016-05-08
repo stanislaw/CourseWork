@@ -18,4 +18,5 @@ $(appname): $(objects)
 
 clean:
 	rm -f $(objects)
+	rm -f $(appname)
 
