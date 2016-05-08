@@ -1,6 +1,6 @@
 appname := minimal-spanning-tree
 
-CXX := clang++
+CXX := g++
 CXXFLAGS := -std=c++11
 
 srcfiles := $(wildcard *.cpp)
