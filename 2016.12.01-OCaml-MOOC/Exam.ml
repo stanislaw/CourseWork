@@ -602,49 +602,78 @@ let is_empty = function
   | [] -> true
   | _ -> false;;
 
-exception SolutionFound;;
+module BoardSet2 = Set.Make(
+struct
+  type t = (board * board option)
+
+  let compare board1 board2 =
+    let (b1, _) = board1 and
+        (b2, _) = board2 in
+    compare_boards_good b1 b2;;
+end
+);;
+
+exception SolutionFound of board;;
 exception SolutionNotFound;;
 
-let solve_klotski (board : board) : board list =
-  let board_set = ref BoardSet.empty and
-    driver_stack : board list ref = ref [] and
-    result_stack : board list ref = ref [] in
-    driver_stack := board :: !driver_stack;
+let hash_exists_key h el =
   try
-    let counter = ref 0 in
-    while not (is_empty !driver_stack) do
-      counter := !counter + 1;
-      if !counter mod 10000 = 0
-      then
-        Printf.printf "Count is %d\n" !counter;
+    Hashtbl.find h el;
+    true
+  with Not_found -> false;;
 
-      let top_board = (List.hd !driver_stack) in
-      result_stack := top_board :: !result_stack;
+exception Break;;
 
-      driver_stack := List.tl !driver_stack;
+let solve_klotski (board : board) : board list =
+  let hash = Hashtbl.create 1000000 in
+    Hashtbl.add hash board None;
 
-      if (final top_board)
-      then raise SolutionFound;
+    try
+      let driver_queue = Queue.create () and
+        board_set = ref BoardSet.empty and
+          counter = ref 0 in
+      Queue.add board driver_queue;
+      board_set := BoardSet.add board !board_set;
 
-      board_set := (BoardSet.add top_board !board_set);
+      while not (Queue.is_empty driver_queue) do
+        counter := !counter + 1;
+        if !counter mod 10000 = 0
+        then
+          Printf.printf "Count is %d %d\n%!" !counter (Queue.length driver_queue);
 
-      let possible_moves = possible_moves top_board in
-      let possible_unvisited_moves = List.filter (fun mv ->
-        let board' = move "not relevant" mv in
-        not (BoardSet.mem board' !board_set)
-      ) possible_moves in
+        let top_board = (Queue.take driver_queue) in
 
-      if is_empty possible_unvisited_moves
-      then
-        result_stack := List.tl !result_stack
-      else
+        if (final top_board)
+        then raise (SolutionFound top_board);
+
+        let possible_moves_unvisited =
+          (List.filter (fun mv ->
+            let board' = move "not relevant" mv in
+            not (BoardSet.mem board' !board_set)
+          ) (possible_moves top_board)) in
+
         (do_all (fun mv ->
           let board' = move "not relevant" mv in
-          driver_stack := board' :: !driver_stack;
-        ) possible_unvisited_moves);
-    done;
-    raise SolutionNotFound;
-  with SolutionFound -> (List.rev !result_stack);;
+          Queue.add board' driver_queue;
+          board_set := BoardSet.add board' !board_set;
+          (Hashtbl.add hash board' (Some(top_board)));
+        ) possible_moves_unvisited);
+      done;
+      raise SolutionNotFound
+    with SolutionFound(final_board) ->
+      let final_result = ref [] and
+        current : board option ref = ref (Some(final_board)) in
+      try
+        while true do
+          match !current with
+          | Some(board) ->
+            final_result := board :: !final_result;
+            current := Hashtbl.find hash board
+          | None -> raise Break
+        done;
+        []
+      with Break -> ();
+      !final_result;;
 
 (*    (List.map (fun mv ->
      move "FOO" mv
@@ -921,9 +950,55 @@ let board_comparison_2 = (compare_boards_good
 );;
 test (board_comparison_2 = -1) "";;
 
-Printf.printf "Starting solve_klotski...\n";;
+let display_board board =
+  for row = 0 to 4 do
+    print_newline();
+    for col = 0 to 3 do
+      let (el_kind, el_number) = board.(row).(col) in
+      match el_kind with
+      | S -> Printf.printf "(S, %d);" el_number
+      | V -> Printf.printf "(V, %d);" el_number
+      | H -> Printf.printf "(H, %d);" el_number
+      | C -> Printf.printf "(C, %d);" el_number
+      | X -> Printf.printf "(X, %d);" el_number
+    done;
+  done;
+  print_newline();;
 
-let solution = solve_klotski initial_board;;
+let rec display_solution solution =
+  match solution with
+  | [] -> ()
+  | x :: xs -> display_board x; display_solution xs;;
+
+let solution = solve_klotski
+  [| [| x  ; x  ; x  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] ;
+     [| x  ; s  ; s  ; x  |] ;
+     [| x  ; s  ; s  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] |];;
 
 Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
 
+display_solution solution;;
+
+let solution = solve_klotski
+  [| [| x  ; s  ; s  ; x  |] ;
+     [| x  ; s  ; s  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] |];;
+Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
+display_solution solution;;
+
+let solution = solve_klotski
+  [| [| x  ; x  ; s  ; s  |] ;
+     [| x  ; x  ; s  ; s  |] ;
+     [| x  ; x  ; x  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] ;
+     [| x  ; x  ; x  ; x  |] |];;
+Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
+display_solution solution;;
+
+Printf.printf "Starting solve_klotski...\n";;
+let solution = solve_klotski initial_board;;
+Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
