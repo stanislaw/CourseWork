@@ -153,15 +153,15 @@ such that: archive_map opset rel (s, l) = (s', l'), where:
 the elements of l and which are not already in the set s.
     s' is the union of s and the elements of l'.
 *)
+let rec do_all f lst =
+  match lst with
+  | [] -> ()
+  | x :: xs -> f x; do_all f xs;;
+
 let archive_map (opset : ('a, 'set) set_operations) (r : 'a rel) (s, l) : ('set * 'a list) =
-  let rec do_all f lst =
-    match lst with
-    | [] -> ()
-    | x :: xs -> f x; do_all f xs
-  and
     (* opset doesn't have an operation to make copies of existing set
        so this function workarounds that by using 'add' operation *)
-    copy_set_by_adding_1st_el set l =
+  let copy_set_by_adding_1st_el set l =
     match l with
     | [] -> set
     | x :: _ -> opset.add x set in
@@ -598,8 +598,58 @@ let oppps : (board list, _) set_operations = {
     final : 'configuration -> bool } *)
 let klotski : (board, move) puzzle = { move; possible_moves; final }
 
+let is_empty = function
+  | [] -> true
+  | _ -> false;;
+
+exception SolutionFound;;
+exception SolutionNotFound;;
+
 let solve_klotski (board : board) : board list =
-  [ board ];;
+  let board_set = ref BoardSet.empty and
+    driver_stack : board list ref = ref [] and
+    result_stack : board list ref = ref [] in
+    driver_stack := board :: !driver_stack;
+  try
+    let counter = ref 0 in
+    while not (is_empty !driver_stack) do
+      counter := !counter + 1;
+      if !counter mod 10000 = 0
+      then
+        Printf.printf "Count is %d\n" !counter;
+
+      let top_board = (List.hd !driver_stack) in
+      result_stack := top_board :: !result_stack;
+
+      driver_stack := List.tl !driver_stack;
+
+      if (final top_board)
+      then raise SolutionFound;
+
+      board_set := (BoardSet.add top_board !board_set);
+
+      let possible_moves = possible_moves top_board in
+      let possible_unvisited_moves = List.filter (fun mv ->
+        let board' = move "not relevant" mv in
+        not (BoardSet.mem board' !board_set)
+      ) possible_moves in
+
+      if is_empty possible_unvisited_moves
+      then
+        result_stack := List.tl !result_stack
+      else
+        (do_all (fun mv ->
+          let board' = move "not relevant" mv in
+          driver_stack := board' :: !driver_stack;
+        ) possible_unvisited_moves);
+    done;
+    raise SolutionNotFound;
+  with SolutionFound -> (List.rev !result_stack);;
+
+(*    (List.map (fun mv ->
+     move "FOO" mv
+   ) possible_moves);;
+ *)
 
 (* TESTS *)
 let test condition condition_str : unit =
