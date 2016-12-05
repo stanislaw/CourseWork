@@ -676,7 +676,6 @@ let solve_klotski (board : board) : board list =
 
     try
       let driver_stack : board list ref = ref [] and
-        board_set = ref BoardSet.empty and
           counter = ref 0 in
       driver_stack := board :: !driver_stack;
 
@@ -696,9 +695,7 @@ let solve_klotski (board : board) : board list =
             Printf.printf "Found solution \n";
             display_board top_board;
             raise (SolutionFound top_board);
-          end
-
-        board_set := (BoardSet.add top_board !board_set);
+          end;
 
         let possible_moves = possible_moves top_board in
         let possible_unvisited_moves = List.filter (fun mv ->
@@ -715,9 +712,6 @@ let solve_klotski (board : board) : board list =
         (do_all (fun mv ->
           let board' = move "not relevant" mv in
           driver_stack := board' :: !driver_stack;
-
-          if (BoardSet.mem board' !board_set)
-          then raise SolutionNotFound;
 
           (* Printf.printf "hash_exists_key\n%!"; *)
 
