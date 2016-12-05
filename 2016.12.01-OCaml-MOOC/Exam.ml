@@ -459,7 +459,7 @@ module IntPairs = (
 
 module PairsSet = Set.Make(IntPairs);;
 
-let possible_moves' = [| (0, 1); (0, -1); (1, 0); (-1, 0) |];;
+let possible_moves' = [| (1, 0); (0, 1); (0, -1); (-1, 0) |];;
 
 (* let move_piece
     (board : board)
@@ -671,24 +671,21 @@ exception SolutionNotFound;;
 exception Break;;
 
 let solve_klotski (board : board) : board list =
-  let hash = BoardHash.create 1000000 in
+  let hash = BoardHash.create 100000000 in
     BoardHash.add hash board None;
 
     try
-      let driver_stack : board list ref = ref [] and
-        board_set = ref BoardSet.empty and
+      let driver_queue = Queue.create () and
           counter = ref 0 in
-      driver_stack := board :: !driver_stack;
+      Queue.add board driver_queue;
 
-      while not (is_empty !driver_stack) do
+      while not (Queue.is_empty driver_queue) do
         counter := !counter + 1;
         if !counter mod 10000 = 0
         then
           Printf.printf "Count is %d\n%!" !counter;
 
-        let top_board = (List.hd !driver_stack) in
-
-        driver_stack := List.tl !driver_stack;
+        let top_board = (Queue.take driver_queue) in
 
         if (final top_board)
         then
@@ -696,9 +693,7 @@ let solve_klotski (board : board) : board list =
             Printf.printf "Found solution \n";
             display_board top_board;
             raise (SolutionFound top_board);
-          end
-
-        board_set := (BoardSet.add top_board !board_set);
+          end;
 
         let possible_moves = possible_moves top_board in
         let possible_unvisited_moves = List.filter (fun mv ->
@@ -714,10 +709,7 @@ let solve_klotski (board : board) : board list =
  *)
         (do_all (fun mv ->
           let board' = move "not relevant" mv in
-          driver_stack := board' :: !driver_stack;
-
-          if (BoardSet.mem board' !board_set)
-          then raise SolutionNotFound;
+          Queue.add board' driver_queue;
 
           (* Printf.printf "hash_exists_key\n%!"; *)
 
