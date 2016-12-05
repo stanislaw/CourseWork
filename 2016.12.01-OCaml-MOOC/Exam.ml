@@ -532,7 +532,7 @@ let compare_boards_good board1 board2 =
         let el1 = board1_row.(col) and
             el2 = board2_row.(col) in
         let (el1_kind, el1_number) = el1 and
-          (el2_kind, el2_number) = el2 in
+            (el2_kind, el2_number) = el2 in
         let cmp = match el1_kind, el2_kind with
         | S, S | H, H | C, C | V, V | X, X ->
           compare_ints el1_number el2_number
@@ -591,8 +591,8 @@ module BoardHash = Hashtbl.Make(struct
   (* let hash = Hashtbl.hash *)
 
   let hash board =
-    Printf.printf "hashing board";
-    display_board board;
+    (* Printf.printf "hashing board"; *)
+    (* display_board board; *)
     let int_from_kind piece_kind = match piece_kind with
     | V -> 10
     | H -> 20
@@ -611,9 +611,15 @@ module BoardHash = Hashtbl.Make(struct
     done;
 
     let h = Hashtbl.hash ll in
-    Printf.printf "%d, %!" h;
+    (* Printf.printf "%d, %!" h; *)
     h
 end)
+
+let exists_key h el =
+  try
+    BoardHash.find h el;
+    true
+  with Not_found -> false;;
 
 module BoardListSet = Set.Make(
   struct
@@ -662,13 +668,6 @@ end
 
 exception SolutionFound of board;;
 exception SolutionNotFound;;
-
-let hash_exists_key h el =
-  try
-    BoardHash.find h el;
-    true
-  with Not_found -> false;;
-
 exception Break;;
 
 let solve_klotski (board : board) : board list =
@@ -692,14 +691,21 @@ let solve_klotski (board : board) : board list =
         driver_stack := List.tl !driver_stack;
 
         if (final top_board)
-        then raise (SolutionFound top_board);
+        then
+          begin
+            Printf.printf "Found solution \n";
+            display_board top_board;
+            raise (SolutionFound top_board);
+          end
 
         board_set := (BoardSet.add top_board !board_set);
 
         let possible_moves = possible_moves top_board in
         let possible_unvisited_moves = List.filter (fun mv ->
           let board' = move "not relevant" mv in
-          not (BoardSet.mem board' !board_set)
+          not (exists_key hash board')
+
+          (* not (BoardSet.mem board' !board_set) *)
         ) possible_moves in
 
 (*         if is_empty possible_unvisited_moves
@@ -713,12 +719,12 @@ let solve_klotski (board : board) : board list =
           if (BoardSet.mem board' !board_set)
           then raise SolutionNotFound;
 
-          Printf.printf "hash_exists_key\n%!";
+          (* Printf.printf "hash_exists_key\n%!"; *)
 
-          if hash_exists_key hash board'
+          if exists_key hash board'
           then raise SolutionNotFound;
 
-          Printf.printf "BoardHash.add hash\n%!";
+          (* Printf.printf "BoardHash.add hash\n%!"; *)
 
           (BoardHash.add hash board' (Some(top_board)));
         ) possible_unvisited_moves);
@@ -729,7 +735,7 @@ let solve_klotski (board : board) : board list =
 
       let final_result = ref [] and
         current : board option ref = ref (Some(final_board)) in
-(*       try
+      try
         let counter = ref 0 in
 
         while true do
@@ -747,7 +753,7 @@ let solve_klotski (board : board) : board list =
           | None -> raise Break
         done;
         []
-      with Break -> (); *)
+      with Break -> ();
       !final_result;;
 
 (*    (List.map (fun mv ->
@@ -1062,4 +1068,6 @@ display_solution solution;;
 Printf.printf "Starting solve_klotski...\n";;
 let solution = solve_klotski initial_board;;
 Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
+display_board (List.hd solution);;
+display_board (List.hd (List.rev solution));;
 
