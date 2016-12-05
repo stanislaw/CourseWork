@@ -267,8 +267,9 @@ let find_pos piece board : direction =
   let found_pos : direction ref = ref { dcol = -1; drow = -1 } in
   try
     for row = 0 to 4 do
+      let board_row = board.(row) in
       for col = 0 to 3 do
-        if board.(row).(col) = piece
+        if board_row.(col) = piece
         then
           begin
             found_pos := { dcol = col; drow = row };
@@ -568,6 +569,52 @@ struct
 end
 );;
 
+let display_board board =
+  for row = 0 to 4 do
+    print_newline();
+    for col = 0 to 3 do
+      let (el_kind, el_number) = board.(row).(col) in
+      match el_kind with
+      | S -> Printf.printf "(S, %d);" el_number
+      | V -> Printf.printf "(V, %d);" el_number
+      | H -> Printf.printf "(H, %d);" el_number
+      | C -> Printf.printf "(C, %d);" el_number
+      | X -> Printf.printf "(X, %d);" el_number
+    done;
+  done;
+  print_newline();;
+
+module BoardHash = Hashtbl.Make(struct
+  type t = board
+  let equal b1 b2 = compare_boards_good b1 b2 = 0
+
+  (* let hash = Hashtbl.hash *)
+
+  let hash board =
+    Printf.printf "hashing board";
+    display_board board;
+    let int_from_kind piece_kind = match piece_kind with
+    | V -> 10
+    | H -> 20
+    | S -> 30
+    | C -> 40
+    | X -> 50
+    and ll = Array.make 20 0
+    in
+    for row = 0 to 4 do
+      for col = 0 to 3 do
+        let piece = board.(row).(col) in
+        let (piece_kind, piece_index) = piece in
+          let current_val = (int_from_kind piece_kind) + piece_index in
+          ll.(row * 4 + col) <- current_val
+      done;
+    done;
+
+    let h = Hashtbl.hash ll in
+    Printf.printf "%d, %!" h;
+    h
+end)
+
 module BoardListSet = Set.Make(
   struct
     type t = board list
@@ -618,61 +665,89 @@ exception SolutionNotFound;;
 
 let hash_exists_key h el =
   try
-    Hashtbl.find h el;
+    BoardHash.find h el;
     true
   with Not_found -> false;;
 
 exception Break;;
 
 let solve_klotski (board : board) : board list =
-  let hash = Hashtbl.create 1000000 in
-    Hashtbl.add hash board None;
+  let hash = BoardHash.create 1000000 in
+    BoardHash.add hash board None;
 
     try
-      let driver_queue = Queue.create () and
+      let driver_stack : board list ref = ref [] and
         board_set = ref BoardSet.empty and
           counter = ref 0 in
-      Queue.add board driver_queue;
-      board_set := BoardSet.add board !board_set;
+      driver_stack := board :: !driver_stack;
 
-      while not (Queue.is_empty driver_queue) do
+      while not (is_empty !driver_stack) do
         counter := !counter + 1;
         if !counter mod 10000 = 0
         then
-          Printf.printf "Count is %d %d\n%!" !counter (Queue.length driver_queue);
+          Printf.printf "Count is %d\n%!" !counter;
 
-        let top_board = (Queue.take driver_queue) in
+        let top_board = (List.hd !driver_stack) in
+
+        driver_stack := List.tl !driver_stack;
 
         if (final top_board)
         then raise (SolutionFound top_board);
 
-        let possible_moves_unvisited =
-          (List.filter (fun mv ->
-            let board' = move "not relevant" mv in
-            not (BoardSet.mem board' !board_set)
-          ) (possible_moves top_board)) in
+        board_set := (BoardSet.add top_board !board_set);
 
+        let possible_moves = possible_moves top_board in
+        let possible_unvisited_moves = List.filter (fun mv ->
+          let board' = move "not relevant" mv in
+          not (BoardSet.mem board' !board_set)
+        ) possible_moves in
+
+(*         if is_empty possible_unvisited_moves
+        then
+          (BoardHash.remove hash top_board);
+ *)
         (do_all (fun mv ->
           let board' = move "not relevant" mv in
-          Queue.add board' driver_queue;
-          board_set := BoardSet.add board' !board_set;
-          (Hashtbl.add hash board' (Some(top_board)));
-        ) possible_moves_unvisited);
+          driver_stack := board' :: !driver_stack;
+
+          if (BoardSet.mem board' !board_set)
+          then raise SolutionNotFound;
+
+          Printf.printf "hash_exists_key\n%!";
+
+          if hash_exists_key hash board'
+          then raise SolutionNotFound;
+
+          Printf.printf "BoardHash.add hash\n%!";
+
+          (BoardHash.add hash board' (Some(top_board)));
+        ) possible_unvisited_moves);
       done;
       raise SolutionNotFound
     with SolutionFound(final_board) ->
+      Printf.printf "Printing results\n%!";
+
       let final_result = ref [] and
         current : board option ref = ref (Some(final_board)) in
-      try
+(*       try
+        let counter = ref 0 in
+
         while true do
+          counter := !counter + 1;
+          if !counter mod 1000 = 0
+          then
+            Printf.printf "Count is %d\n%!" !counter;
+
           match !current with
-          | Some(board) ->
-            final_result := board :: !final_result;
-            current := Hashtbl.find hash board
+          | Some(board') ->
+            final_result := board' :: !final_result;
+            if (compare_boards_good board' board = 0) then
+              raise Break;
+            current := BoardHash.find hash board'
           | None -> raise Break
         done;
         []
-      with Break -> ();
+      with Break -> (); *)
       !final_result;;
 
 (*    (List.map (fun mv ->
@@ -950,21 +1025,6 @@ let board_comparison_2 = (compare_boards_good
 );;
 test (board_comparison_2 = -1) "";;
 
-let display_board board =
-  for row = 0 to 4 do
-    print_newline();
-    for col = 0 to 3 do
-      let (el_kind, el_number) = board.(row).(col) in
-      match el_kind with
-      | S -> Printf.printf "(S, %d);" el_number
-      | V -> Printf.printf "(V, %d);" el_number
-      | H -> Printf.printf "(H, %d);" el_number
-      | C -> Printf.printf "(C, %d);" el_number
-      | X -> Printf.printf "(X, %d);" el_number
-    done;
-  done;
-  print_newline();;
-
 let rec display_solution solution =
   match solution with
   | [] -> ()
@@ -1002,3 +1062,4 @@ display_solution solution;;
 Printf.printf "Starting solve_klotski...\n";;
 let solution = solve_klotski initial_board;;
 Printf.printf "Finished solve_klotski: %d\n" (List.length solution);;
+

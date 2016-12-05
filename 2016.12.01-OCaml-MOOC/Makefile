@@ -3,8 +3,8 @@
 default: compile run
 
 run:
-	./exam
+	OCAMLRUNPARAM=b ./exam
 
 compile:
-	ocamlopt -o exam exam.ml
+	ocamlopt -g -o exam exam.ml
 
