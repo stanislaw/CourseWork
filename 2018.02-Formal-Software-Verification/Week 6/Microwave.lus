@@ -1,0 +1,62 @@
+-- 4.  In the material used for this topic, there is an example of a Microwave.
+-- Below is the code. To refresh your memory, we never want to get to a state
+-- where the door is open and the heat is on. The developer claims to have fixed
+-- the defect discovered by the model checking. His fix is reflected in the code
+-- below. Perform modeling checking on the code again.
+
+type action_t = enum { OpenDoor, CloseDoor, TurnHeatOn, TurnHeatOff };
+type door_t = enum { Opened, Closed };
+type heat_t = enum { On, Off };
+
+node makeAction(cur_door: door_t; cur_heat: heat_t; action: action_t)
+  returns (new_door: door_t; new_heat: heat_t);
+let
+  (new_door, new_heat) =
+    if action = OpenDoor then
+      if not (cur_door = Opened) then
+        -- to fix the model:
+        -- - comment out "(Opened, cur_heat)"
+        -- - uncomment the following if..else:
+        (Opened, cur_heat)
+
+        -- the fix:
+        -- if cur_heat = On then
+        --  (Opened, Off)
+        -- else
+        -- (Opened, cur_heat)
+
+      else
+        (cur_door, cur_heat)
+
+    else if action = CloseDoor then
+      if cur_door = Opened then
+        (Closed, cur_heat)
+      else
+        (cur_door, cur_heat)
+
+    else if action = TurnHeatOn then
+      if (not (cur_heat = On)) and (not (cur_door = Opened)) then
+        (cur_door, On)
+      else
+        (cur_door, cur_heat)
+
+    else if action = TurnHeatOff then
+      if cur_heat = On then
+        (cur_door, Off)
+      else
+        (cur_door, cur_heat)
+
+    else
+      (cur_door, cur_heat);
+tel
+
+node top (action: action_t) returns ()
+var cur_door: door_t;
+var cur_heat: heat_t;
+let
+  (cur_door, cur_heat) =
+    (Closed, Off) -> makeAction((pre cur_door), (pre cur_heat), action);
+
+  --%MAIN;
+  --%PROPERTY not (cur_door = Opened and cur_heat = On);
+tel

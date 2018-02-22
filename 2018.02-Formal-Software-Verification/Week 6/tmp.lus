@@ -1,0 +1,41 @@
+-- I am building a cancer treatment machine. The machine can emit two types of
+-- beams; for simplicity let’s just call them A and B. There are two different
+-- plates that can be placed in front of the beam; let’s call them 1 and 2. When
+-- you turn the machine on it always starts ups with beam set to A and plate set
+-- to 1. That is the initial state.
+
+-- For safety reasons we never want the machine to be at beam B and plate 2.
+-- If this every happens a deadline dose of radiation will be emitted and it
+-- will kill the patient.
+-- But all of the other combinations of beams and plates are valid.
+--
+-- Method setBeam(str beamType)
+-- If beamType = B and plate = 1
+-- Set beam = B
+-- Else Set beam = A
+--
+-- Method setPlate(int plateType)
+-- If plateType = 2 and beam = A
+-- Set plate = 2
+-- Else Set plate = 1
+
+type plate_t = subrange [1, 2] of int;
+type beam_t = enum { A, B };
+
+node top (plate: plate_t; beam: beam_t) returns (OK: bool);
+var p: plate_t;
+var b: beam_t;
+var ok_p, ok_b: bool;
+let
+  p = 1 -> if plate = 2 and (pre beam) = A then 2 else 1;
+  ok_p = not (b = B and p = 2);
+
+  b = A -> if beam = B and p = 1 then B else A;
+  ok_b = not (b = B and p = 2);
+
+  OK = ok_p and ok_b;
+
+  --%MAIN;
+
+  --%PROPERTY OK;
+tel
