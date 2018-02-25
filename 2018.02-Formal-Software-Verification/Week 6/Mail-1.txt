@@ -1,0 +1,26 @@
+Hello Stanislav,
+
+There are several ways to interpret the behavior of the system from the text. Let's start with the easiest way to model, and also the more permissive one: at each step the user can change the beam and the plate at the same time. In this case, the computed value of b at each step should depend on the current value of beam (the input) and the previous value of p. That is,
+
+b = A -> if beam = B and pre p = 1 then B else A;
+
+Likewise, the value of p at each step should depend on the current value of plate (the other input), and the previous value of b:
+
+p = 1 -> if plate = 2 and pre b = A then 2 else 1;
+
+Notice that you wrote (pre beam) instead of (pre b).
+
+Each input stream is independent of the other one, so any combination of values is possible at each step.
+
+The attached file "beams_1.lus" contains the full model. (Note that there is no need to use an OK variable to specify the property.)
+
+If you run Kind 2 on the model, you can check that Kind 2 provides a counterexample. Starting from (b=A,p=1), the system can reach the state (b=B,p=2) in one step with inputs (beam=B, plate=2).
+
+However, the existence of such trivial counterexample induces to think that the original interpretation is as follows: at each step the user can only change either the beam or the plate, but not both at the same time. To model this case, we can introduce a boolean input stream which determines whether the beam or the plate has been changed.
+
+The attached file "beams_2.lus" includes the full model for this case.
+
+If you run Kind 2 on the new model, Kind 2 is able to prove the property safe.
+
+Best,
+Daniel
